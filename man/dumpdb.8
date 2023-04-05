@@ -1,0 +1,49 @@
+.TH DUMPDB 8 "MDBMS utilities"
+.UC 4
+.SH NAME
+dumpdb - reads data from a database and outputs it in SQL statements
+.SH SYNOPSIS
+dumpdb [-u user] [-p pwd] [-t port] [-i] hostname database [table]
+.SH DESCRIPTION
+dumpdb is the backup tool for the MDBMS database. It will first try to connect
+to the database port on
+.I hostname.
+If supplied, the
+.I user
+and
+.I password
+are sent to the database server for authentification. If no user
+is specified, the anonymous user is used. This means that
+the data retrieval will fail, unless select priviliges on the tables where
+granted to all.
+.PP
+Next, the specified
+.I database 
+will be opened. When a
+.I table
+is specified, this table will be retrieved. When no table is specified, all
+tables will be retrieved.
+.PP
+Output is generated to stdout in standard SQL code. This code can later be
+inserted with the todb utility.
+
+.SS OPTIONS
+.TP
+.B "-u"
+Specify user for authentification
+.TP
+.B "-p"
+Specify password for authentification
+.TP
+.B "-i"
+Prompt for user/password
+.TP
+.B "-t"
+Specify TCP port to connect to
+
+.SH AUTHOR
+Marty Bochane (marty@hinttech.com)
+
+.SH BUGS
+Dumpdb does not read privileges granted to users on tables. This means that
+privilege information is not outputed, and should be reentered by hand.

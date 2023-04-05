@@ -1,0 +1,48 @@
+
+MDBMS is a new SQL database server (currently) for UNIX systems.
+
+Some main features of MDBMS:
+- Very easy installation, 1 binary, no configuration.
+- Rich SQL support, like: subselects (WHERE IN, WHERE EXISTS), referential
+  integrity (ON DELETE CASCADE, SET NULL, RESTRICT), GROUP BY, full expressions
+  in SELECT and WHERE parts (SELECT (salary/12)*months FROM ...), primary keys
+  and foreign keys consisting of multiple attributes and more.
+- Support for tables without a primary key.
+- Full control over a telnet TCP connection. There's a user TCP port for normal
+  use and a client TCP port, for fast, easy to parse access by clients.
+- Smooth multitasking: every port can run their own queries simultaneously.
+- Full user based security system with GRANT/REVOKE on SELECT, INSERT, DELETE,
+  UPDATE, DROP and WITH GRANT OPTION.
+- Low system demands: about 5 Mb of disk space and 4 Mb of RAM.
+- Free for non commercial use. Commercial versions will be very cheap.
+- A dynamic CGI-bin is included for easy web integration. This CGI-BIN can
+  talk to the database in SQL and supports other features like: DES password
+  encryption, IF THEN ELSE constructions (even nested), an INCLUDE statement, 
+  support for arithmetic calculations and more.
+- Versions will be available for Linux, BSD, Alpha, Solaris and possibly others.
+  (Linux and BSD versions can be downloaded now, others will be available in
+  about 1 week). Later, the full source code will be released.
+- A Java interface is being worked on, as well as ODBC.
+  
+
+Legal stuff:
+This version of MDBMS is an beta test version. Is it free for non commercial
+use. Commercial users can use this version free for a period of one month.
+Future upgrades will probably be very cheap for commercial users: about $100.
+Remember that this is beta software, which means that it may still contain
+bugs. I cannot be held responsible for any loss of data resulting from the use
+of this system. I have tested the database system for about 4 months now, and
+it has run without problems here, but still be careful. A utility 'dumpdb' is
+included to backup your data.
+
+
+The packages includes:
+- The server
+- A dynamic CGI-BIN for an easy web interface
+- A set of utility's
+- A C-library to interface with the database
+
+The full MDBMS package can be downloaded at:
+
+http://www.hinttech.com/mdbms/
+

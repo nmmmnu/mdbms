@@ -1,0 +1,40 @@
+<! mdbms connect "localhost">
+<! mdbms database system>
+<HTML>
+
+<h3>All databases:</h3>
+
+Below you'll find a list of all databases: <br>
+
+<! mdbms query "select * from databases" q1>
+
+<table border=1>
+   <tr> <td>Name</td> <td>Authorization</td> </tr> 
+   <! mdbms print_rows q1 "<tr> <td>$0</td> <td>$2</td> </tr>">
+</table>
+
+<br>
+Now let's calculate some things:
+
+<! mdbms query "select count(*) from databases" q1>
+<! mdbms getrow q1>
+<! mdbms set $totalentries=$0>
+<! mdbms print "The total amount of databases is $totalentries"><br>
+<! mdbms if $totalentries >= 10>
+<! mdbms then>
+   You have more than 10 databases
+<! mdbms else>
+   You have less than 10 databases
+<! mdbms fi>
+
+<! mdbms set $othervar=$totalentries*2>
+<! mdbms print "Amount was:$totalentries, times 2 is:$othervar">
+<br>
+Finally let's print a calander:<br>
+
+<pre>
+<! mdbms pipe $cal="cal 1998">
+<! mdbms print "$cal">
+</pre>
+
+</HTML>

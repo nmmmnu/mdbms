@@ -1,0 +1,49 @@
+.TH TODB 8 "MDBMS utilities"
+.UC 4
+.SH NAME
+todb - writes a series of commands to the MDBMS database server
+.SH SYNOPSIS
+todb [-h hostname] [-d database] [-u user] [-p password] [-t port] [-i] [file...]
+.SH DESCRIPTION
+todb is a utility for the MDBMS database server that allows you to write
+an entire file to a
+.I database
+at
+.I hostname.
+When no hostname is given, "localhost" is assumed. When no
+.I file
+is given, stdin is assumed.
+.I user
+and
+.I password
+can be specified on the command line or can be read from stdin, by using
+.I -i.
+.PP
+When a certain statement fails, todb will print this statement to stdout.
+
+.SS OPTIONS
+.TP
+.B "-h"
+Specify host to connect to
+.TP
+.B "-d"
+Specify database to connect to
+.TP
+.B "-u"
+Specify user for authentification
+.TP
+.B "-p"
+Specify password for authentification
+.TP
+.B "-i"
+Prompt for user/password
+.TP
+.B "-t"
+Specify TCP port to connect to
+
+
+
+.SH AUTHOR
+Marty Bochane (marty@hinttech.com)
+
+

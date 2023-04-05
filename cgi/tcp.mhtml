@@ -1,0 +1,7 @@
+<! mdbms opentcp marty="localhost" 2223>
+<! mdbms readtcp marty $var>
+<! mdbms print "Read this: $var">
+<! mdbms writetcp marty "open system;">
+<! mdbms writetcp marty "select * from databases;">
+<! mdbms readtcp marty $var>
+<! mdbms print "Read this: $var">

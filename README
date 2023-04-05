@@ -1,0 +1,170 @@
+Release notes for the binary beta release of MDBMS 1.0
+--------------------------------------------------------
+
+WARNING:
+
+This is beta software, and is not guaranteed to work. Although it is tested
+thoroughly, it may still contain bugs. However, a server crash will most
+likely leave the database intact, since the database system files are not
+altered when a query is running. You are still advised to backup your data
+often, by using the 'dumpdb' utility. This system has run many days under heavy
+use without problems, but don't expect it to do the same thing on your machine.
+
+COPYING:
+
+This beta version of MDBMS is free and can be copied freely. It may be used
+for all purposes, but remember that there are shortcomings, and that it is not
+guaranteed to work. I cannot be held responsible for any loss in any way
+resulting from the use of this software. Please send bug reports to
+marty@hinttech.com
+
+
+WHAT'S GOOD:
+- rich SQL subset (including subselects, group by, multiple attribute keys,
+  foreign keys with automatic referential integrity (on delete cascade,..) )
+- no configuration
+- no directory filled with obscure system binaries, just launch 'db' and it's
+  ready
+- easy web interface with the included MGEN cgi-bin
+- small system requirements (About 1 Mb of diskspace and 4 MB RAM)
+- full security with GRANT/REVOKE on SELECT, UPDATE, DELETE, INSERT, DROP
+
+WHAT'S BAD (what am I working on):
+- still working on speed improvements (syncing can be slow)
+- current set of documentation
+
+
+INSTALLATION:
+
+Untar the file in a directory. The database system consists of:
+- The database server 'db'.
+- A set of utilities:
+  * dumpdb converts the contents of a database to SQL "insert" statements.
+  * getdb is a command line utility to read data from the database.
+  * todb is a utility to send the contents of a file to the database.
+- The MGEN cgi-bin, which can be used to create dynamic HTML pages,
+  filled with data from the database.
+- A C library to access the database from a C or C++ program.
+
+
+STARTUP:
+
+Executing db with the -h flag will show all command line flags available.
+Start the database by typing 'db&'. There is no configuration nessecary.
+The system files are expected to be in the current directory.
+If no system files are found, they will be created. To completely destroy
+the current databases, kill the server, remove the system files
+(*.db *.map *.bin) and restart the server.
+
+
+USING THE DATABASE:
+
+The system opens TCP ports 2223 (human interface port) and 2224 (Fast Open
+database Protocol port (FOP)).
+Port 2223 implements an Ingres SQL-monitor like interface. Queries can be
+entered at the '*' prompt. Multiple lines can be used to enter a query.
+When ready, use '\g' to execute the query. Note that all SQL statements should
+end with a semicolon (';'). If not, you'll get a parse error. Online help
+is available by using the '\h <command>' option.
+A summary of supported SQL statements is included in this document.
+
+Port 2224 implements an easy ASCII based protocol, which is used by the
+C-library and the 'mgen' cgi-bin. This protocol will be documented later.
+
+Multiple connections can be established to the server. Every connection can
+run their own queries without having to wait for other queries. Queries on
+port 2224, which is used by client software run with twice the priority of
+queries on port 2223. 
+
+The Meta data is stored in a database called 'system'. To access this data,
+open the 'system' database by using the 'open system;' command. The following
+tables can be found here:
+'databases' : Contains a list of databases in the system. (worldreadable)
+'tables'    : Contains the tables in the system. (worldreadable)
+'users'     : Contains a list of users, for security features.
+              (Readable/writeable only for system user)
+'storage'   : Contains a list of low level files in use. Will be used later
+              to store more low level files with different page sizes.
+              (worldreadable)
+'grants'    : Contains a list of privileges granted to users (world readable)
+
+Note that you should be careful with these tables. The system user has all
+privileges on all tables, even the system tables.
+
+
+STOPPING THE SERVER
+
+To stop the server, simply kill it using the UNIX 'kill' command, or press
+control-C if the server is running in the foreground.
+The database will now continue running, until all requests have been handled.
+After this, it will sync the system files and quit.
+
+
+SECURITY
+
+MDBMS offers security based on users. Initially there's only one user:the
+user 'system', who has all prviliges and no password. The system user can
+create other users with the 'create user' command. Passwords can be changed
+with 'set pw=<password>'. Once a connection is established to the server,
+it is assigned the anonymous user. You can switch to a different user with
+the 'user' command.
+Only the system user can create a database. When the 'authorization' option
+of 'create database' is used, all privileges for this database are assigned
+to the specified user. This user can then create tables in the database.
+To allow other users to access data, the 'grant' command is used. For example:
+to allow user 'marty' to select and to update a table called 'papers', you can
+type: grant select,update on papers to marty;
+The special user 'all' can be used to grant priviliges to all users (even to the
+anonymous user). For example: To make table 'papers' world readable, you type:
+grant select on papers to all.
+
+
+
+SQL SUMMARY REFERENCE FOR MDBMS
+
+MDBMS implements a rich subset of SQL. Not all of the SQL features are
+included yet, but development will continue. Below is a summary of SQL
+features which are included and a summary of features not yet included.
+
+features included:
+
+- creation of multiple databases, using 'create database' command.
+- creation of tables using 'create table' command.
+- primary keys, which may consist of multiple attributes.
+- foreign keys, with CASCADE, SET NULL and RESTRICT rules.
+- expressions can be used: 'select month*(salary+10)' or 'where salary-200>20'.
+- the aggregate functions MIN, MAX, AVG, SUM and COUNT, which may contain
+  expressions: 'select avg(salary/12)'.
+- NULL values and NOT NULL definitions.
+- subselects by using IN and EXISTS operators.
+- joins between tables, including table aliasing: 'select test.name from
+  employees test'.
+- WHERE clause including boolean logic with AND, OR and NOT.
+- GROUP BY clause (although HAVING is currently not supported)
+- ORDER BY clause
+- UPDATE statement
+- DELETE statement
+- DROP TABLE statement
+- GRANT/REVOKE on SELECT, INSERT, DELETE, UPDATE, DROP with support for
+  WITH GRANT OPTION.
+- HELP statement to view the structure of tables
+- data types
+  integer   : defined as the UNIX integer
+  float     : defined as the UNIX double
+  money     : defined as the UNIX double
+  char      : defined as a single character
+  varchar(x): defined as an unlimited string; x is only used for the
+              table size on the human interface port. Clients using the
+              FOP port, will have access to the full string.
+  date      : defined as either a time, a date or both. The UNIX time_t
+              definition is used internally, which limits this type to values
+              after January 1 1970.
+
+features not yet included:
+
+- distinct operator
+- a HAVING clause
+- table locking (this may cause problems when deleting data, while an other
+  query is fetching the data at the same time. Concurrent inserts are OK)
+- no indices yet
+- no views yet

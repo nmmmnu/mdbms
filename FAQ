@@ -1,0 +1,91 @@
+MDBMS Frequently Asked Questions
+
+New versions can be found at: http://www.hinttech.nl/mdbms/
+
+General question
+================================================================================
+
+I GET A SEGMENTATION FAULT WHEN I START THE DATABASE
+
+This is usually caused by an incorrect version of the dynamic C library.
+Check your version by looking at the file /lib/libc.so.
+The Linux version of MDBMS is linked with lib.so.5.4.23
+The BSD version of MDBMS is linked with libc.so.3.0.
+Updating this library will probably solve the problem.
+
+
+I CAN CONNECT TO THE DATABASE, BUT MY PROGRAMS/MGEN CAN'T
+
+Make sure that there's no firewall blocking ports 2223 AND 2224. Mgen and
+other programs connect to port 2224, so it's not enough to open port 2223.
+
+
+DOES FULL CONTROL OVER A TCP CONNECTION MEAN THAT EVERYBODY ON THE INTERNET
+CAN ACCESS/MODIFY MY DATA ?
+
+No, not directly. By default, a table is only readable/writable by the
+owner of the database, unless a GRANT statement is used. If you want to
+be more secure, you can instruct your firewall to deny TCP connections to
+port 2223 and port 2224.
+
+
+HOW SECURE IS MDBMS ?
+
+MDBMS uses a user based security system. To be able to read or modify data, you
+must first switch to a user that has these privileges granted to him. You can
+only switch to a user if you supply the correct password. Passwords are stored
+in the table 'users' in the meta databases and are encrypted with DES. The
+'user' table can only be read by the system user, unless read privileges are
+granted to others.
+
+
+I LOSE DATA AFTER A REBOOT
+
+Some systems kill all processes quickly after a reboot command. After MDBMS
+receives a TERM signal, it will start syncing the database to disk. Some
+systems don't allow the processes to finish, resulting in data loss. To
+solve this problem, you can do two things:
+- Make sure the database is killed, before you reboot. You can do this with
+  the kill command.
+- Send a 'sync' signal to the database, before rebooting. You can do this
+  with the 'getdb' command: 'getdb localhost system sync'
+
+
+
+How do I .....
+================================================================================
+TALK TO THE DATABASE
+
+The easiest way to talk to the database is to connect to it with the 'telnet'
+utility. Simply type 'telnet localhost 2223' after you've started the database
+server.
+
+
+MAKE A TABLE WORLD READABLE
+
+Grant read privileges to all users with the following command:
+  GRANT SELECT ON <table> TO ALL;
+
+
+BACKUP MY DATA
+
+You can backup your data with the 'dumpdb' utility. More information
+can be found in the dumpdb manual page.
+
+
+What to do if .....
+================================================================================
+A USER LOST HIS PASSWORD
+
+Follow this procedure:
+- Log in as the 'system' user, with 'user system password <pwd>;'
+- Change to the user you want to change the password for with 'user <user>;'
+- Change his password with 'set pwd=<password>' or delete it with 'set pwd;'
+
+
+I CAN'T REMEMBER THE NAME OF MY DATABASE/TABLE
+
+Open the 'system' database with 'open system;'.
+You can now read the table 'tables' with 'select * from tables;'
+In this table you'll find the table names in all databases.
+

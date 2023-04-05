@@ -1,0 +1,48 @@
+.TH GETDB 8 "MDBMS utilities"
+.UC 4
+.SH NAME
+getdb - executes an SQL query and print the result on stdout.
+.SH SYNOPSIS
+getdb [-u user] [-p pwd] [-i] [-t port] [-s separator] hostname database query
+.SH DESCRIPTION
+getdb is a tool to execute SQL queries from the command line.
+It will first try to connect to the database port on
+.I hostname.
+If supplied, the
+.I user
+and
+.I password
+are sent to the database server for authentification. If no user is specified,
+the anonymous user is used. This means that
+the data retrieval will fail, unless select priviliges on the tables where
+granted to all.
+.PP
+Next, the specified
+.I database
+will be opened and the
+.I query
+is executed. The resulting table is printed to stdout, using the
+.I separator
+character between the columns. When no separator is specified, ':' is used.
+
+.SS OPTIONS
+.TP
+.B "-u"
+Specify user for authentification
+.TP
+.B "-p"
+Specify password for authentification
+.TP
+.B "-i"
+Prompt for user/password
+.TP
+.B "-s"
+Specify separator to print between columns
+.TP
+.B "-t"
+Specify TCP port to connect to
+
+
+.SH AUTHOR
+Marty Bochane (marty@hinttech.com)
+

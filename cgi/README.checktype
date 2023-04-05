@@ -1,0 +1,22 @@
+checktype is a small utility you can use with the mgen EXEC command.
+It can be used to check if input is valid. For example:
+
+'checktype -c ipadr 10.10' will check if '10.10' is a valid ip address.
+
+Checktype returns 0 on failure and <>0 for success.
+
+Types are:
+time               : Will check for a valid time (HH:MM:SS)
+time2              : Will check for a valid time (HH:MM)
+timerange          : Will check for a valid time range
+lowercase          : Will check if all characters are lower case
+lowerword          : Will check for words (no spaces) with only lower case letters 
+email              : Will check for a valid email address (myname@myhost.something)
+noquotes           : Will check strings without quotes (' or ")
+nospaces           : Will check for strings without spaces
+ipadr              : Will check for valid ip addresses
+netmask            : Will check for a valid netmask
+numerical          : Will check for strings containing only numbers
+lowernum           : Will check for strings containing only digits or lower case letters
+dotcase            : Will check for digits, letters and dots
+

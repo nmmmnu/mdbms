@@ -1,0 +1,70 @@
+Since beta 9:
+- Fixed compile errors on newer linux systems.
+- Serious buffer overflow on database/table naming resolved, thanks to
+  teleh0r (http://www.digit-labs.org/)
+
+Since beta 8:
+- Fixed a compile error on BeOS.
+
+Since beta 7:
+- Buffer overflow fixed in server thanks to <tdp@psynet.net> - HaCk-13 TeaM
+- Added deamon flag
+- Add -c flag to chdir() to directory of binary thanks to
+  Bruce Knowles <bk19@pixie.co.za>
+
+Since beta 6:
+- Utilities and MGEN now allow port control.
+- Added <pre> to calander printing in cgi example.
+- MGEN will now clear $0..$255 variables when getrow retrieves no more rows.
+
+Since beta 5:
+- Added mgen TCP commands.
+- Updated makefile to link with g++
+- Fixed $NOW bug in mgen.
+- Fixed todb buffer overflow and improved output.
+
+Since beta 4:
+- Added demo MHTML
+- Fixed mgen print bug
+
+Since beta 3:
+- Fixed a bug that caused '' to be recognized as a char instead of a string.
+- Added mgen PIPE command
+- Added mgen $DATE and $TIME variables
+- Added mgen SETDEFAULT command
+- Added weeknum and dayofweek functions
+- Debugged library
+- Changed Makefile
+
+Since beta 2:
+- Added SQL "LIKE" condition; see online help on topic 'like'
+- Fixed password encoding.
+- "Strange" characters are now allowed in passwords by specifying them as a
+  string: user system password '{test!}'
+- Added mgen.cgi QUERY <VARIABLE> command
+- Added mgen.cgi PRINT_ATTRIBUTES and PRINT_HEADER commands
+- MGEN now shows errors in red boxes
+- fixed skeleton.c authorization problem
+- minor fixes
+
+Since beta 1:
+- Added rownum()
+- Library rewritten from scratch, now supporter multiple sessions
+- Ported the utilities to the new library
+- Added timeouts for clients
+- Added issue.txt to show client startup information
+- Fixed dumpdb quote escape bug
+- Fixed an order by/group by crash
+- Added statistical information
+
+Since alpha version:
+- Minor fixes and speed improvements
+- Added command line switches for ports
+- Fixed type conversion
+- No need to type \g and ';' any longer
+- System user no longer has all privileges on the system database
+- Reworked the help system
+- DROP DATABASE added
+- ORDER BY added
+- Manual pages for utilities now included
+- System user is now recreated on startup when not found

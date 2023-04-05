@@ -1,0 +1,228 @@
+%topic created:CREATE DATABASE
+create database <name> [ authorization <name> ];
+
+Example:
+   create database marty;
+
+Databases can only be created by the system user.
+
+SEE ALSO: createt, insert
+
+%topic createt:CREATE TABLE
+create table <table>  ( <name> <type> [[not] null] [, ...] 
+   [ primary key ( <attribute> [, ...] )]
+   [ foreign key ( <attribute> [, ...] ) references <table>
+      [ on delete (cascade|set null|restrict)] ] );
+
+<type> can be:
+<type>       description           syntax
+date         A date, time or both  1 jan 1980 12:00 (or 12:00 or 1 jan 1970)
+money        A money value         $100
+varchar      A string              'test'
+char         One character         '1'
+integer      An integer value      10
+float        A real value          1.5
+
+create table test
+   (index integer,
+    index2 integer,
+    startdate date not null,
+    index3 varchar(30)
+    primary key (index, index2)
+    foreign key (index3) references test2 on delete set null);
+SEE ALSO: created, drop
+%topic createu:CREATE USER
+create user <name> [password <pw>];
+
+Creates the user <name>, with optionally password <pw>. When no password is
+supplied, everybody can switch to the user, without supplying a password.
+Only the 'system' user can create other users.
+
+Example:
+create user marty password test;
+
+%topic delete:DELETE
+
+delete from <table> [ where <expression> ];
+
+Example:
+
+delete from project where os = 'NT' or cost > $1000;
+
+SEE ALSO: insert, update
+
+%topic drop:DROP
+
+drop table <name> [cascade];
+
+DROP TABLE will destroy the specified table in the current database.
+
+Use the cascade option to automatically remove all entries from a table.
+If the cascade option is not used, and there are still entries in the table,
+the drop statement will fail.
+
+%topic functions:FUNCTIONS 
+
+Some functions can be used in expressions and select parts. These are:
+
+returns    name               example
+------------------------------------------------------------------------
+integer    second(<date>)     second(3 mar 1997 08:40:10)=10
+integer    minute(<date>)     minute(3 mar 1997 08:40:10)=40
+integer    hour(<date>)       hour  (3 mar 1997 08:40:10)=8
+integer    day(<date>)        date  (3 mar 1997 08:40:10)=3
+integer    month(<date>)      month (3 mar 1997 08:40:10)=3
+integer    year(<date>)       year  (3 mar 1997 08:40:10)=1997
+date       date()             date() = current date and time
+date       striptime(<date>)  striptime(3 mar 1997 08:40:10)=08:40:10
+date       stripdate(<date>)  stripdate(3 mar 1997 08:40:10)=3 mar 1997
+integer    rownum()           rownum() = number of outputed rows
+
+Functions can be nested: To get current month try 'month(date())'.
+
+Example:
+
+select month(time) as month, count(*) as number_of_errors from logs
+group by month(time);
+%topic global:MAIN
+Console commands available:
+   \g: go                  \h: help         \l: statistical information
+   \e: erase buffer        \t: status
+   \s: show buffer         \q: quit
+
+Try '\h <command>' to get help on a topic. A list of topics is available
+with the '\h topics' command.
+
+Task              Topic           Task               Topic           
+==============================================================
+open database   | OPEN <name>     create a user    | createu
+create database | created         switch to a user | user
+create table    | createt         set password     | setpwd
+examine table   | HELP <name>     modify privileges| grant
+insert data     | insert          drop table       | drop
+delete data     | delete          drop database    | dropdb
+modify data     | update
+query database  | select
+%topic grant:GRANT/REVOKE
+
+grant <privileges>|<ALL [PRIVILEGES]> on <tablename> TO|FROM <users>
+   [WITH GRANT OPTION];
+revoke <privileges>|<ALL [PRIVILEGES]> on <tablename> TO|FROM <users>
+   [WITH GRANT OPTION];
+
+Privileges can be: select, insert, delete, update or drop.
+Using the WITH GRANT OPTION clause will enable the specified users to pass
+their privileges to other users.
+
+Note that the indicated users don't have to exist. The privileges will be active
+when the user is created.
+
+Example:
+
+grant all on users to marty with grant option;
+revoke delete, drop on users from all;
+grant select, update on product to peter, bart;
+
+%topic insert:INSERT
+
+insert into <table> values ( value [, value ...] );
+
+Below is a list of values:
+
+Type		Syntax
+----------------------
+integer		1234
+float		12.34
+money		$ 1234
+char		'm'
+varchar		'marty'
+null		NULL
+date		2 jun 1975 14:00 or 2 jun 1975 or 14:00
+                Alternatively, you can specify a time and date using this
+                format: '(date) <number>' (without the quotes) where <number>
+                is the number of seconds since jan 1 1970, as returned by
+                the UNIX system call time().
+Example:
+insert into users values ('Marty', 2 jun 1975, $1000, NULL);
+insert into users values ('Marty', (date) 12345, $1000, NULL);
+SEE ALSO: createt, delete, update
+
+%topic select:SELECT
+
+select <Tabquery> [ AS <name> ] [, ...] from <tablename> [alias] [, ...]
+[ where <expression> ] [group by <tabquery>] [order by <tabquery>];
+
+Tabquery examples:
+- 2 jun 1975-days
+- salary/12 as monthly
+- hours*salary
+
+expression examples:
+- start_date > 1 aug 1997
+- salary < $2000
+- days*salary = $400 and name is not null
+- start_date-1 jan 1997 in (select days from project)
+- exists (select * from project) 
+
+SEE ALSO: createt, insert
+
+%topic setpwd:SET PASSWORD
+
+set pwd=<pw>;
+set pwd;
+
+Sets or deletes the password for the current user.
+
+Example:
+set pwd=test;
+set pwd;
+
+%topic update:UPDATE
+
+update <table> set <column> = <expression> [ where <expression> ];
+
+Example:
+
+update project set days=days/2 where name = 'linux';
+
+SEE ALSO: createt, delete, update
+
+%topic user:USER
+
+user <name> [password <pw>];
+
+Switches to user <name>, with optionally password <pw>.
+
+Example:
+user marty password test;
+
+%topic dropdb:DROP DATABASE
+
+drop database <name> [cascade];
+
+DROP DATABASE will destroy the specified database. Databases can only
+be dropped by the system user.
+
+Use the cascade option to automatically remove all tables from the database.
+If the cascade option is not used, and there are still tables in the database,
+the drop statement will fail.
+
+
+%topic like:REGULAR EXPRESSIONS WITH LIKE
+
+Like uses shell-like regular expressions rather than the old SQL syntax for
+pattern matching. The following constructions can be used:
+
+         Operator    Meaning
+         *           Matches zero or more characters
+         ?           Matches one character
+         [abc]       Matches the character a, b or c
+         [^a]        Matches everything but the character a
+
+Examples:
+
+   select .... where name like '*marty*'
+      Selects every record which has a name field containing 'marty'.
+   select .... where name like '[Ss]un*'
+      Selects every record which has a name field which start with 'sun' or
+         'Sun' 

@@ -1,0 +1,273 @@
+.TH MDBMS_FOP 5 "may 2000"
+.UC 5
+.SH NAME
+FOP - The Fast Opendatabase Protocol of MDBMS
+.SH DESCRIPTION
+FOP is used to communicate directly with the MDBMS database system. The
+FOP port is usually found on TCP port 2224. It can be used to perform all
+possible tasks, including system management.
+
+.SH GLOBAL
+Note: All definitions for the FOP protocol can be found in the header files
+"protocol.h" and  "libdbms.h" in the lib directory.
+.PP
+FOP is a two way protocol, based on ASCII. Commands are send to the server as
+normal text strings. A command string is terminated with a newline character.
+Data that comes back from the server, is also line oriented. Every data line
+terminates with a newline character. There are three types of text, send to
+you by the server:
+.TP
+.B "comments"
+these lines start with a hash character (#) and should be ignored.
+.TP
+.B "commands"
+these are lines that start with an exclamation mark (!) and
+are followed directly by a number, which indicates the command number.
+.TP
+.B "data"
+These are lines, containing data from queries or other sources. There's one
+rule associated with these lines: When they start with a backslash (\e) you
+should skip this backslash. This is done to prevent date lines that start
+with an exclamation mark (!) from being recognized as commands.
+
+.SH SENDING COMMANDS
+Commands are all send to the server as SQL commands, or as MDBMS specific
+commands. These commands are exactly the same as the ones you should type
+on the normal port. For example, to identify yourself as the 'system' user,
+with the password 'syspwd', you should send the follow line to the server:
+.PP
+.ti +10
+.I user system password syspwd\en
+.PP
+Where \en is the newline character.
+Before sending a command, you can optionally specify a
+.I synchronisation number
+that will be associated with the command. This synchronisation number will
+be repeated exactly, in the command's query response. This way, you can send
+many queries at once and read the results later. When no synchronisation number
+was supplied, -1 will be used. A synchronisation number
+is send by sending a backslash and a number on one line. For example, to send
+the command 'user system password syspwd' with synchronisation number 12 to
+the server, you send:
+.PP
+.ti +10
+.I \e12\en
+.ti +10
+.I user system password syspwd\en
+.PP
+Where \en is the newline character.
+
+.SH RECEIVING COMMANDS
+MDBMS uses command numbers to indicate, what it's going to send next. Commands
+are:
+.TP
+.B "OK(1)"
+This command is used to indicate that an operation succeeded.
+.TP
+.B "QUERY RESPONSE(2)"
+This commands is always send in reply to a command from the client. The query
+reponse is always followed by a synchronisation number.
+.TP
+.B "START DATA(3)"
+This command indicates that data from a query will follow.
+.TP
+.B "START HELP(4)"
+This command indicates that the structure of a table will follow.
+.TP
+.B "READY(5)"
+This command indicates that no more data will follow.
+.TP
+.B "ERROR(6)"
+This command indicates that an error occured.
+.TP
+.B "PING(7)"
+This command indicates that the server is unsure of the connectivity of the
+connection. When a PING was received, the command '\ep' should be returned to
+the server. When the client fails to do so, the server might close the
+connection.
+
+.PP
+When you send a command to the server you'll always get a
+.I QUERY RESPONSE
+first. After this QUERY response, a number will be send, which is the
+synchronisation number which was supplied for the command associated with
+this response. Immediatly after this number, you'll get an OK or an ERROR
+command.
+
+.SS The ERROR command
+In case an error occured, you'll get an ERROR command. Immediatly after the
+ERROR command, a number will be send, which indicates the amount of errors
+that occured. For every error, a line will follow with more information. These
+lines contain a number, which is the error code, and a text, which is the
+context of the error. After the last error line, the code READY is send.
+For example, when trying to open a database which does
+not exist by sending 'open wrong_database', these are the resulting lines
+from the server:
+.PP
+.in +5
+.I !2
+(QUERY RESPONSE)
+.br
+.I -1
+(synchronisation number is -1)
+.br
+.I !6
+(ERROR)
+.br
+.I 1
+(1 error)
+.br
+.I 9 wrong_database
+(error 9, context 'wrong_database')
+.br
+.I !5
+(READY)
+.br
+.in -5
+
+.SS The OK command
+The OK command indicates that the command was executed without problems.
+What is send next depends on the kind of command that was send to the server.
+When you send a command which does not return any data, like an INSERT or
+an CREATE USER command, the code
+.I READY
+is send. After this code, no other commands will follow. The code
+.I START DATA
+is send instead if the command you sent, does return data. After the START
+DATA command, two sections of information will follow. First, you'll receive
+the header of the resulting data. This header consists of line with a number to
+indicate the amount of resulting attributes, and for every attribute one line
+with the type, size and name of the attribute.
+.PP
+After the header, the actual data is send. For every attribute a line is send
+with the contents of that attribute. After the final row, a READY code is
+send. For example, the query 'select * from tables' in the system table, results
+in these lines from the server:
+.PP
+.I !2
+(QUERY RESPONSE)
+.br
+.I -1
+(synchronisation number is -1)
+.br
+.I !1
+(OK)
+.br
+.I !3
+(START DATA)
+.br
+.I 3
+(3 attributes in resulting table)
+.br
+.I 5 20 dbname
+(1st: type=5 (VARCHAR) size=20 name=dbname)
+.br
+.I 5 20 tblname
+(2nd: type=5 (VARCHAR) size=20 name=tblname)
+.br
+.I 1 4 page
+(3rd: type=1 (INTEGER) size=4 name=page)
+.br
+.I system
+.br
+.I databases
+.br
+.I -1
+.br
+.I system
+.br
+.I tables
+.br
+.I -1
+.br
+.I system
+.br
+.I users
+.br
+.I -1
+.br
+.I system
+.br
+.I storage
+.br
+.I -1
+.br
+.I system
+.br
+.I grants
+.br
+.I -1
+.br
+.I !5
+(READY)
+
+.SH GETTING TABLE DEFINITION
+
+When you want to know the structure of a table, you must first send the 
+command "\eh <tablename>" to the server. After doing this, you will first
+receive a QUERY RESPONSE with a synchronisation code. After this, two
+codes can be send:
+
+.TP
+.B ERROR
+This code indicates that the table could not be found. After this code,
+no other codes will follow.
+.TP
+.B START HELP
+This code indicates that the table has been located, and that data will
+follow.
+
+.PP
+After the START HELP code, a line will be send, whith a number that indicates
+how many attributes are in the table. For every attribute, a line will be send
+with this format:
+.PP
+.ti +10
+<type> <size> <nulls?> <primary key?> <name>
+.PP
+.TP
+.B type
+Type is the number of the type of this attribute.
+.TP
+.B size
+Size is the size in bytes of this attribute
+.TP
+.B nulls?
+Nulls indicate wheter or not NULL values are allowed. 1=yes, 0=no.
+.TP
+.B primary key?
+Primary key indicate wheter or not this attribute is part of the primary
+key of this table. 1=yes, 0=no.
+.TP
+.B name
+Name is the name of the attribute.
+.PP
+After these lines, the definitions of the foreign keys are send. For every
+foreign key, you'll get a line structured like this:
+.PP
+.ti +10
+<referenced table> <action> <attributes....>
+.PP
+.TP
+.I referenced table
+This is the name of the table referenced by this key.
+.TP
+.I action
+This is a number that indicates the action of this foreign key. It can be
+0 (ON DELETE RESTRICT), 1 (ON DELETE CASCADE) or 2 (ON DELETE SET NULL)
+.TP
+.I attributes
+These are the names of the attributes in this foreign key.
+
+.SH TIPS
+
+You can try out the behaviour of the FOP protocol, by using "telnet" to
+connect to the FOP port. To do this, type:
+.I telnet localhost 2224
+if your database is running on your own machine.
+
+.SH AUTHOR
+Marty Bochane (marty@hinttech.com)
+
+.SH BUGS
+Send bug reports to marty@hinttech.com

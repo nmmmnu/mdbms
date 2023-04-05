@@ -1,0 +1,176 @@
+MDBMS Tutorial
+================================================================================
+This is a small tutorial to get you started. It covers the following topics:
+
+- starting the database
+- managing users
+- create databases
+- creating tables
+- using 'dumpdb'
+
+STARTING THE DATABASE
+---------------------
+After untarring the tgz file, change to the mdbms directory and type 'db&'.
+The database is now ready for use.
+
+CONNECTING
+----------
+First, we have to connect to the database. To do this, type
+'telnet localhost 2223'. You should now see the mdbms prompt:
+
+# MDBMS V0.99b ready.
+# Use \h for help.
+*
+
+The database is now ready for input.
+
+USERS
+-----
+Security in mdbms is user based. This means that you have to identify
+yourself to get certain privileges. I'll demonstrate that here. First
+type '\t'. The database tells you, that you are not authorized:
+
+* \t
+You are not authorized.
+There's no current database.
+*
+
+Every connection to the database is anonymous at first. The anonymous
+user only has the privileges that were granted to 'all'. This means that
+he can only read tables that were marked 'world readable' and write only
+in tables that were marked 'world writable'.
+
+All main administration should be done by the 'system' user. To switch
+to this user, type:
+
+user system;
+
+By typing '\t' again, you can verify that you are indeed the 'system' user.
+User accounts are protected by passwords, but when first started, the
+database creates the system user, without a password, so everybody can
+switch to the system user. To set a password type:
+
+set pwd='test';
+
+You have now changed the system password to test. You can use the same
+command to change your password into something else. To delete your password,
+you type : 'set pwd;'
+
+The system user has the privileges to do the following:
+
+- create new user accounts
+- switch to users without supplying a password
+- create databases
+- read/write/delete all data in all databases
+
+DATABASES
+---------
+A database is a collection of tables, which contain data. At first, only
+one database exists: the 'system' database. This is a special databases
+that holds information about the database server. To open a database you use
+the 'open' command. So, to use the system database you type:
+
+open system;
+
+By typing '\t' you can verify that you are using the 'system' database. 
+Now type the following:
+
+select * from tables;
+
+All tables in the database system are now shown.
+
+Now it's time to create your own database. For this tutorial we'll use
+a database called 'demo'. Make sure you are still the system user, by typing
+'\t'. Now create your database by typing:
+
+create database demo;
+
+Now, to use this database, you must open it first, so you type:
+
+open demo;
+
+In this next section, we'll create tables and put some data in them.
+
+
+TABLES
+------
+Now that you have created your own database, it's time to create a table.
+Let's create a table called 'customer' which we can use to store customer
+data. We first need to know, what we want to store about our customers.
+For this tutorial, let's say we want to store their names, their age,
+and their date of birth. Now to create this table, type:
+
+create table customer (
+   name varchar(20),
+   age integer,
+   dob date
+   primary key(name));
+
+You can now get information about this table by typing:
+
+help customer;
+
+Now, you'll see a lot of information. First, the attributes of the table
+are displayed, followed by its primary key. Finally, you'll see the
+security rules, set for this table. Note that all privileges are granted
+to the user who created the table, in this case 'system'.
+To look at the contents of the table, type:
+
+select * from customer;
+
+Surprise, it's pretty empty. Let's put a customer into the table. Type:
+
+insert into customer values ('Marty',22,2 jun 1975);
+
+That makes me one of your customers. Now use the same syntax to enter some 
+more entries into the table. Check the contents of the table by typing:
+
+select * from customer;
+
+You should now see some entries. Now, just for fun, try the following:
+
+select name, date()-dob as age_in_days from customer;
+
+This will result in a table, which contains the names of all the customers
+(name) and the current date - the date of birth (date()-dob), which results
+in the amount of days between the date of birth and the current date.
+
+That's enough SQL for now. MDBMS supports a rich subset of SQL, so play around
+if you like.
+
+
+USING ONLINE HELP
+-----------------
+Online help is available in MDBMS, with the '\h' command. Try typing '\h',
+and you should see the main help screen. Suppose you want to delete data,
+but you don't know how to do that. In the main help screen is a table,
+which shows you the available help topics. A task 'delete date' is listed,
+with the topic 'delete'. Now type '\h delete', to get the information you
+want.
+
+
+USING THE DUMPDB UTILITY
+------------------------
+DUMPDB can be used to backup data in the database. It is located under
+the 'util' subdirectory. Change to that directory first. Now try this
+command:
+
+dumpdb localhost system
+
+You'll see a lot of SQL statements scrolling by. Note that directly after
+the SQL 'create table users..' statement, an error is shown. That's
+because the user table, is not world readable, and dumpdb did not have
+the privileges to read the table. To fix this, you can use to command
+line switches, to specify the user to use when accessing the data.
+Type this:
+
+dumpdb -u system -p <password> localhost system
+
+Where <password> is the password you set for the user 'system'. Now
+the error should be gone.
+
+
+CUSTOMIZING YOUR DATABASE
+-------------------------
+When you put text into the file 'issue.txt', it will be shown to every client
+that connects to the HIP port. You can put all kinds of information here.

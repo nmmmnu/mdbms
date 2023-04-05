@@ -1,0 +1,10 @@
+Note on upgrading from version beta 2:
+
+In the MDBMS beta 3 release, a new password encryption method is used.
+This means, that the passwords set in versions previous to beta 3 will
+no longer work. Before using newer releases, make sure you delete the
+password of the system user, by logging in as the system user and by typing
+'set pwd;'.
+Now start the new version and reset the passwords.
+
+

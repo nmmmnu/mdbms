@@ -1,0 +1,66 @@
+############################################################################
+# SQL Tutorial data file                                                   #
+# This file contains the SQL code to insert the sample database used in    #
+# our Interactive SQL Tutorial, which can be found at our site:            #
+# http://www.hinttech.com                                                  #
+#                                                                          #
+# Use TODB to insert this data into the database server                    #
+#                                                                          #
+# Edit the system password here:                                           #
+
+user system;
+
+#                                                                          #
+# This code will take care of the rest:                                    #
+############################################################################
+
+create user sqldemo;
+create user sqlmain;
+create database sql authorization sqlmain;
+user sqlmain;
+open sql;
+create table trips (code varchar(5) not null, type varchar(7), location varchar(18), scheduled date, cost money, days integer primary key (code));
+insert into trips values ('NYC1', 'City', 'New York', 1 mar 1998, $ 500.00, 14);
+insert into trips values ('NYB1', 'Beach', 'New York', 1 jul 1998, $ 300.00, 14);
+insert into trips values ('PAR1', 'City', 'Paris', 15 jul 1998, $ 1200.00, 21);
+insert into trips values ('EUR1', 'Tour', 'Europe', 10 aug 1998, $ 3000.00, 28);
+insert into trips values ('CRU1', 'Cruise', 'Bahama\'s', 3 aug 1998, $ 3500.00, 14);
+insert into trips values ('SKI1', 'Ski', 'Alps', 1 nov 1998, $ 2000.00, 14);
+insert into trips values ('SKI2', 'City', 'Denver', 3 dec 1998, $ 1400.00, 14);
+insert into trips values ('ORI1', 'Tour', 'Oriental', 10 aug 1998, $ 1400.00, 21);
+insert into trips values ('BER1', 'City', 'Berlin', 14 feb 1998, $ 1000.00, 14);
+insert into trips values ('NET1', 'Tour', 'Netherlands', 17 may 1998, $ 1200.00, 14);
+insert into trips values ('ITA1', 'Tour', 'Italy', 20 may 1998, $ 1500.00, 21);
+insert into trips values ('EGY1', 'Tour', 'Egypt', 12 sep 1998, $ 1300.00, 14);
+insert into trips values ('WAS1', 'City', 'Washington', 18 sep 1998, $ 600.00, 7);
+insert into trips values ('DIS1', 'Fun', 'Disney World', 12 oct 1998, $ 1200.00, 14);
+insert into trips values ('MIA1', 'Beach', 'Miami', 11 aug 1998, $ 1400.00, 14);
+insert into trips values ('NYB2', 'Culture', 'New York', 10 feb 1998, $ 200.00, 2);
+insert into trips values ('CRU2', 'Cruise', 'Hawaii', 15 jun 1998, $ 2000.00, 14);
+insert into trips values ('LA1', 'City', 'Los angeles', 19 jul 1998, $ 1400.00, 14);
+create table locations (name varchar(18) not null, tmp_summer float, tmp_winter float primary key (name));
+insert into locations values ('New York', 20.0, -5.0);
+insert into locations values ('Paris', 25.0, 0.0);
+insert into locations values ('Europe', 20.0, -1.0);
+insert into locations values ('Bahama\'s', 34.0, 15.0);
+insert into locations values ('Alps', 22.0, -15.0);
+insert into locations values ('Denver', 15.0, -20.0);
+insert into locations values ('Oriental', 35.0, 20.0);
+insert into locations values ('Berlin', 18.0, -10.0);
+insert into locations values ('Netherlands', 19.0, -5.0);
+insert into locations values ('Italy', 30.0, 3.0);
+insert into locations values ('Egypt', 40.0, 20.0);
+insert into locations values ('Washington', 18.0, -10.0);
+insert into locations values ('Disney World', 25.0, 6.0);
+insert into locations values ('Miami', 25.0, 6.0);
+insert into locations values ('Hawaii', 35.0, 20.0);
+insert into locations values ('Los angles', 25.0, 10.0);
+create table reservations (name varchar(20) not null, trip varchar(5) not null, persons integer primary key (name, trip));
+insert into reservations values ('Jones M.', 'NYB1', 2);
+insert into reservations values ('Smith L.', 'LA1', 4);
+insert into reservations values ('Bond J.', 'CRU1', 1);
+insert into reservations values ('Brown P.', 'ORI1', 3);
+insert into reservations values ('Freeman D.', 'ITA1', 2);
+insert into reservations values ('Marty', 'NET1', 1);
+insert into reservations values ('Baker', 'DIS1', 6);
+grant select on reservations,locations,trips to sqldemo;

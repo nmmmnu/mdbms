@@ -1,0 +1,22 @@
+Here's the first source release of MDBMS 0.99 beta 3. It's just a quick
+release to enable people to compile it on their systems.
+
+To compile it, you need a c++ compiler and the utilities lex & yacc.
+The lex and yacc code contains some GNU specific extentions, so you probably
+need the GNU versions, flex and bison to compile these. If you don't have these
+utilities, try the included lex.yy.c and y.tab.c files, which where generated
+with flex and bison on my machine.
+
+The makefile in the main directory will do all the compiling. It uses make -C
+to descend into the deeper directories. Some older versions of make don't
+understand this switch. In that case, upgrade your make, or compile the source
+in each directory by hand.
+
+The C++ code doesn't contain much comments, sorry for that. If you find any
+problems, it's probably easier to send me some information, than to try to
+fix it yourself.
+ 
+The code has been tested on the following machines:
+
+Linux, BSD, SUN Solaris, Alpha and linux
+

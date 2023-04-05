@@ -1,0 +1,37 @@
+.TH DB 8 "may 2001"
+.UC 4
+.SH NAME
+db - Start the MDBMS database server
+.SH SYNOPSIS
+db [-v] [-m kb] [-p port] [-f port] [-h]
+.SH DESCRIPTION
+Db is the MDBMS database server. Upon startup, it will open its data files
+files.bin, system.db, system.map, units.db and unit.map. When these files
+could not be opened, they are created.
+
+.SS OPTIONS
+.TP
+.B "-v"
+Show version information.
+.TP
+.B "-m"
+Use the specified amount of kilobytes of cache. Default is 4000 Kb.
+.TP
+.B "-p"
+Specifies the port number to use for the human interface port. Default is 2223.
+.TP
+.B "-f"
+Specifies the port number to use for the fast opendatabase port. Default is 2224.
+.TP
+.B "-h"
+Display command line switches.
+
+
+.SH AUTHOR
+Marty Bochane (marty@hinttech.com)
+
+.SH BUGS
+Send bug reports to marty@hinttech.com
+
+.SH SEE ALSO
+todb(8), getdb(8), dumpdb(8), fop(5)

@@ -1,0 +1,3956 @@
+
+
+Terminals which are not used:
+
+   HAVING
+   VIEW
+
+
+Conflict in state 96 between rule 106 and token PLUS resolved as reduce.
+Conflict in state 96 between rule 106 and token MINUS resolved as reduce.
+Conflict in state 96 between rule 106 and token STAR resolved as reduce.
+Conflict in state 96 between rule 106 and token SLASH resolved as reduce.
+Conflict in state 97 between rule 105 and token PLUS resolved as reduce.
+Conflict in state 97 between rule 105 and token MINUS resolved as reduce.
+Conflict in state 97 between rule 105 and token STAR resolved as reduce.
+Conflict in state 97 between rule 105 and token SLASH resolved as reduce.
+Conflict in state 137 between rule 101 and token PLUS resolved as reduce.
+Conflict in state 137 between rule 101 and token MINUS resolved as reduce.
+Conflict in state 137 between rule 101 and token STAR resolved as shift.
+Conflict in state 137 between rule 101 and token SLASH resolved as shift.
+Conflict in state 138 between rule 102 and token PLUS resolved as reduce.
+Conflict in state 138 between rule 102 and token MINUS resolved as reduce.
+Conflict in state 138 between rule 102 and token STAR resolved as shift.
+Conflict in state 138 between rule 102 and token SLASH resolved as shift.
+Conflict in state 139 between rule 104 and token PLUS resolved as reduce.
+Conflict in state 139 between rule 104 and token MINUS resolved as reduce.
+Conflict in state 139 between rule 104 and token STAR resolved as reduce.
+Conflict in state 139 between rule 104 and token SLASH resolved as reduce.
+Conflict in state 140 between rule 103 and token PLUS resolved as reduce.
+Conflict in state 140 between rule 103 and token MINUS resolved as reduce.
+Conflict in state 140 between rule 103 and token STAR resolved as reduce.
+Conflict in state 140 between rule 103 and token SLASH resolved as reduce.
+Conflict in state 199 between rule 130 and token OR resolved as reduce.
+Conflict in state 199 between rule 130 and token AND resolved as reduce.
+Conflict in state 246 between rule 129 and token OR resolved as reduce.
+Conflict in state 246 between rule 129 and token AND resolved as shift.
+Conflict in state 247 between rule 128 and token OR resolved as reduce.
+Conflict in state 247 between rule 128 and token AND resolved as reduce.
+State 153 contains 1 shift/reduce conflict.
+
+Grammar
+rule 1    start -> statement_list
+rule 2    statement_list -> statement semi
+rule 3    statement_list -> statement_list statement semi
+rule 4    semi -> SEMICOLON
+rule 5    semi ->		/* empty */
+rule 6    statement -> create_statement
+rule 7    statement -> user_statement
+rule 8    statement -> drop_statement
+rule 9    statement -> set_statement
+rule 10   statement -> open_statement
+rule 11   statement -> delete_statement
+rule 12   statement -> insert_statement
+rule 13   statement -> select_statement
+rule 14   statement -> update_statement
+rule 15   statement -> grant_statement
+rule 16   statement -> revoke_statement
+rule 17   statement -> HELP IDENTIFIER
+rule 18   statement -> SYNC
+rule 19   open_statement -> OPEN IDENTIFIER
+rule 20   user_statement -> USER IDENTIFIER PASSWORD IDENTIFIER
+rule 21   user_statement -> USER IDENTIFIER PASSWORD STRING
+rule 22   user_statement -> USER IDENTIFIER
+rule 23   create_statement -> CREATE DATABASE create_database
+rule 24   create_statement -> CREATE TABLE create_table
+rule 25   create_statement -> CREATE TABLE IDENTIFIER AS select_statement
+rule 26   create_statement -> CREATE USER create_user
+rule 27   create_user -> IDENTIFIER
+rule 28   create_user -> IDENTIFIER PASSWORD IDENTIFIER
+rule 29   create_user -> IDENTIFIER PASSWORD STRING
+rule 30   create_database -> IDENTIFIER AUTHORIZATION IDENTIFIER
+rule 31   create_database -> IDENTIFIER
+rule 32   create_table -> IDENTIFIER OPENPAREN table_def key_clause CLOSEPAREN
+rule 33   key_clause -> primary_clause
+rule 34   key_clause -> foreign_clause
+rule 35   key_clause -> primary_clause foreign_clause
+rule 36   primary_clause ->		/* empty */
+rule 37   primary_clause -> PRIMARY KEY OPENPAREN ident_list CLOSEPAREN
+rule 38   foreign_clause -> foreign_key
+rule 39   foreign_clause -> foreign_key foreign_clause
+rule 40   foreign_key -> FOREIGN KEY OPENPAREN ident_list CLOSEPAREN REFERENCES IDENTIFIER foreign_rules
+rule 41   foreign_rules ->		/* empty */
+rule 42   foreign_rules -> ON DELETE delete_rule
+rule 43   delete_rule -> RESTRICT
+rule 44   delete_rule -> CASCADE
+rule 45   delete_rule -> SET TNULL
+rule 46   ident_list -> IDENTIFIER
+rule 47   ident_list -> IDENTIFIER COMMA ident_list
+rule 48   table_def -> table_def_entry
+rule 49   table_def -> table_def_entry COMMA table_def
+rule 50   table_def_entry -> IDENTIFIER attrtype nullspec
+rule 51   table_def_entry -> IDENTIFIER attrtype
+rule 52   attrtype -> INTEGER
+rule 53   attrtype -> VARCHAR OPENPAREN NUMBER CLOSEPAREN
+rule 54   attrtype -> DATE
+rule 55   attrtype -> MONEY
+rule 56   attrtype -> FLOAT
+rule 57   attrtype -> CHAR
+rule 58   nullspec -> TNULL
+rule 59   nullspec -> NOT TNULL
+rule 60   drop_statement -> DROP TABLE IDENTIFIER cascade_or_restrict
+rule 61   drop_statement -> DROP DATABASE IDENTIFIER cascade_or_restrict
+rule 62   cascade_or_restrict ->		/* empty */
+rule 63   cascade_or_restrict -> CASCADE
+rule 64   cascade_or_restrict -> RESTRICT
+rule 65   set_statement -> SET IDENTIFIER
+rule 66   set_statement -> SET IDENTIFIER EQUALS IDENTIFIER
+rule 67   set_statement -> SET IDENTIFIER EQUALS STRING
+rule 68   insert_statement -> INSERT INTO IDENTIFIER VALUES OPENPAREN insert_values CLOSEPAREN
+rule 69   insert_values -> insert_value_neg
+rule 70   insert_values -> insert_value_neg COMMA insert_values
+rule 71   insert_value_neg -> insert_value
+rule 72   insert_value_neg -> MINUS NUMBER
+rule 73   insert_value_neg -> MINUS FLOATVAL
+rule 74   insert_value -> STRING
+rule 75   insert_value -> STRING1
+rule 76   insert_value -> NUMBER
+rule 77   insert_value -> FLOATVAL
+rule 78   insert_value -> MONEYVAL
+rule 79   insert_value -> DATEVAL
+rule 80   insert_value -> TNULL
+rule 81   select_statement -> SELECT select_clause FROM from_clause where_clause ordergroup
+rule 82   ordergroup ->		/* empty */
+rule 83   ordergroup -> order_clause
+rule 84   ordergroup -> group_clause
+rule 85   select_clause -> STAR
+rule 86   select_clause -> select_clause_list
+rule 87   select_clause_list -> select_element
+rule 88   select_clause_list -> select_element COMMA select_clause_list
+rule 89   select_element -> column_expression
+rule 90   select_element -> column_expression AS IDENTIFIER
+rule 91   column_expression -> column_function OPENPAREN func_ident CLOSEPAREN
+rule 92   column_expression -> attribute_expression
+rule 93   column_function -> AVG
+rule 94   column_function -> COUNT
+rule 95   column_function -> MAX
+rule 96   column_function -> MIN
+rule 97   column_function -> SUM
+rule 98   func_ident -> STAR
+rule 99   func_ident -> attribute_expression
+rule 100  attribute_expression -> attribute
+rule 101  attribute_expression -> attribute_expression PLUS attribute_expression
+rule 102  attribute_expression -> attribute_expression MINUS attribute_expression
+rule 103  attribute_expression -> attribute_expression SLASH attribute_expression
+rule 104  attribute_expression -> attribute_expression STAR attribute_expression
+rule 105  attribute_expression -> MINUS attribute_expression
+rule 106  attribute_expression -> PLUS attribute_expression
+rule 107  attribute_expression -> FUNCTION OPENPAREN attribute_expression CLOSEPAREN
+rule 108  attribute_expression -> procedure OPENPAREN CLOSEPAREN
+rule 109  attribute_expression -> insert_value
+rule 110  attribute_expression -> OPENPAREN attribute_expression CLOSEPAREN
+rule 111  procedure -> DATE
+rule 112  procedure -> ROWNUM
+rule 113  attribute -> IDENTIFIER
+rule 114  attribute -> IDENTIFIER DOT IDENTIFIER
+rule 115  from_clause -> from_item
+rule 116  from_clause -> from_item COMMA from_clause
+rule 117  from_item -> IDENTIFIER
+rule 118  from_item -> IDENTIFIER IDENTIFIER
+rule 119  where_clause ->		/* empty */
+rule 120  where_clause -> WHERE condition
+rule 121  condition -> attribute_expression EQUALS attribute_expression
+rule 122  condition -> attribute_expression LESS attribute_expression
+rule 123  condition -> attribute_expression MORE attribute_expression
+rule 124  condition -> attribute_expression LEQ attribute_expression
+rule 125  condition -> attribute_expression MOQ attribute_expression
+rule 126  condition -> attribute_expression NEQ attribute_expression
+rule 127  condition -> OPENPAREN condition CLOSEPAREN
+rule 128  condition -> condition AND condition
+rule 129  condition -> condition OR condition
+rule 130  condition -> NOT condition
+rule 131  condition -> attribute IS TNULL
+rule 132  condition -> attribute IS NOT TNULL
+rule 133  condition -> attribute LIKE STRING
+rule 134  condition -> attribute_expression IN OPENPAREN insert_values CLOSEPAREN
+rule 135  condition -> attribute_expression BETWEEN attribute_expression AND attribute_expression
+rule 136  condition -> EXISTS OPENPAREN select_statement CLOSEPAREN
+rule 137  condition -> attribute_expression IN OPENPAREN select_statement CLOSEPAREN
+rule 138  order_clause -> ORDER BY attributeorder_list
+rule 139  group_clause -> GROUP BY attributeexp_list
+rule 140  attributeorder_list -> attributeorder_exp
+rule 141  attributeorder_list -> attributeorder_exp COMMA attributeorder_list
+rule 142  attributeorder_exp -> attribute_expression
+rule 143  attributeorder_exp -> ASCENDING attribute_expression
+rule 144  attributeorder_exp -> DESCENDING attribute_expression
+rule 145  attributeexp_list -> attribute_expression
+rule 146  attributeexp_list -> attribute_expression COMMA attributeexp_list
+rule 147  delete_statement -> DELETE FROM from_item where_clause
+rule 148  update_statement -> UPDATE from_item SET IDENTIFIER EQUALS attribute_expression where_clause
+rule 149  grant_statement -> GRANT grant_revoke_body
+rule 150  revoke_statement -> REVOKE grant_revoke_body
+rule 151  grant_revoke_body -> gritems ON ident_list tofrom grantwho with_grant
+rule 152  grantwho -> ALL
+rule 153  grantwho -> ident_list
+rule 154  tofrom -> TO
+rule 155  tofrom -> FROM
+rule 156  gritems -> gritem
+rule 157  gritems -> gritems COMMA gritem
+rule 158  gritem -> SELECT
+rule 159  gritem -> INSERT
+rule 160  gritem -> DELETE
+rule 161  gritem -> UPDATE
+rule 162  gritem -> DROP
+rule 163  gritem -> ALL
+rule 164  gritem -> ALL PRIVILEGES
+rule 165  with_grant ->		/* empty */
+rule 166  with_grant -> WITH GRANT OPTION
+
+Terminals, with rules where they appear
+
+$ (-1)
+error (256)
+IDENTIFIER (257) 17 19 20 21 22 25 27 28 29 30 31 32 40 46 47 50 51
+    60 61 65 66 67 68 90 113 114 117 118 148
+STRING (258) 21 29 67 74 133
+STRING1 (259) 75
+NUMBER (260) 53 72 76
+FUNCTION (261) 107
+FLOATVAL (262) 73 77
+MONEYVAL (263) 78
+DATEVAL (264) 79
+CREATE (265) 23 24 25 26
+AUTHORIZATION (266) 30
+DATABASE (267) 23 61
+DROP (268) 60 61 162
+USER (269) 20 21 22 26
+PASSWORD (270) 20 21 28 29
+SET (271) 45 65 66 67 148
+TABLE (272) 24 25 60
+TNULL (273) 45 58 59 80 131 132
+INTEGER (274) 52
+OPEN (275) 19
+VARCHAR (276) 53
+DATE (277) 54 111
+MONEY (278) 55
+FLOAT (279) 56
+SYNC (280) 18
+INSERT (281) 68 159
+INTO (282) 68
+VALUES (283) 68
+CHAR (284) 57
+HELP (285) 17
+SELECT (286) 81 158
+FROM (287) 81 147 155
+WHERE (288) 120
+ORDER (289) 138
+GROUP (290) 139
+BY (291) 138 139
+HAVING (292)
+AS (293) 25 90
+IS (294) 131 132
+IN (295) 134 137
+PRIVILEGES (296) 164
+SUM (297) 97
+COUNT (298) 94
+AVG (299) 93
+MIN (300) 96
+MAX (301) 95
+LESS (302) 122
+MORE (303) 123
+LEQ (304) 124
+MOQ (305) 125
+NEQ (306) 126
+VIEW (307)
+UPDATE (308) 148 161
+PRIMARY (309) 37
+KEY (310) 37 40
+OPENPAREN (311) 32 37 40 53 68 91 107 108 110 127 134 136 137
+CLOSEPAREN (312) 32 37 40 53 68 91 107 108 110 127 134 136 137
+SEMICOLON (313) 4
+EQUALS (314) 66 67 121 148
+COMMA (315) 47 49 70 88 116 141 146 157
+DOT (316) 114
+CASCADE (317) 44 63
+RESTRICT (318) 43 64
+DELETE (319) 42 147 160
+BETWEEN (320) 135
+EXISTS (321) 136
+FOREIGN (322) 40
+REFERENCES (323) 40
+ON (324) 42 151
+GRANT (325) 149 166
+WITH (326) 166
+OPTION (327) 166
+REVOKE (328) 150
+TO (329) 154
+ALL (330) 152 163 164
+ASCENDING (331) 143
+DESCENDING (332) 144
+ROWNUM (333) 112
+LIKE (334) 133
+PLUS (335) 101 106
+MINUS (336) 72 73 102 105
+STAR (337) 85 98 104
+SLASH (338) 103
+OR (339) 129
+AND (340) 128 135
+NOT (341) 59 130 132
+
+Nonterminals, with rules where they appear
+
+start (88)
+    on left: 1
+statement_list (89)
+    on left: 2 3, on right: 1 3
+semi (90)
+    on left: 4 5, on right: 2 3
+statement (91)
+    on left: 6 7 8 9 10 11 12 13 14 15 16 17 18, on right: 2 3
+open_statement (92)
+    on left: 19, on right: 10
+user_statement (93)
+    on left: 20 21 22, on right: 7
+create_statement (94)
+    on left: 23 24 25 26, on right: 6
+create_user (95)
+    on left: 27 28 29, on right: 26
+create_database (96)
+    on left: 30 31, on right: 23
+create_table (97)
+    on left: 32, on right: 24
+key_clause (98)
+    on left: 33 34 35, on right: 32
+primary_clause (99)
+    on left: 36 37, on right: 33 35
+foreign_clause (100)
+    on left: 38 39, on right: 34 35 39
+foreign_key (101)
+    on left: 40, on right: 38 39
+foreign_rules (102)
+    on left: 41 42, on right: 40
+delete_rule (103)
+    on left: 43 44 45, on right: 42
+ident_list (104)
+    on left: 46 47, on right: 37 40 47 151 153
+table_def (105)
+    on left: 48 49, on right: 32 49
+table_def_entry (106)
+    on left: 50 51, on right: 48 49
+attrtype (107)
+    on left: 52 53 54 55 56 57, on right: 50 51
+nullspec (108)
+    on left: 58 59, on right: 50
+drop_statement (109)
+    on left: 60 61, on right: 8
+cascade_or_restrict (110)
+    on left: 62 63 64, on right: 60 61
+set_statement (111)
+    on left: 65 66 67, on right: 9
+insert_statement (112)
+    on left: 68, on right: 12
+insert_values (113)
+    on left: 69 70, on right: 68 70 134
+insert_value_neg (114)
+    on left: 71 72 73, on right: 69 70
+insert_value (115)
+    on left: 74 75 76 77 78 79 80, on right: 71 109
+select_statement (116)
+    on left: 81, on right: 13 25 136 137
+ordergroup (117)
+    on left: 82 83 84, on right: 81
+select_clause (118)
+    on left: 85 86, on right: 81
+select_clause_list (119)
+    on left: 87 88, on right: 86 88
+select_element (120)
+    on left: 89 90, on right: 87 88
+column_expression (121)
+    on left: 91 92, on right: 89 90
+column_function (122)
+    on left: 93 94 95 96 97, on right: 91
+func_ident (123)
+    on left: 98 99, on right: 91
+attribute_expression (124)
+    on left: 100 101 102 103 104 105 106 107 108 109 110,
+    on right: 92 99 101 102 103 104 105 106 107 110 121 122 123 124
+    125 126 134 135 137 142 143 144 145 146 148
+procedure (125)
+    on left: 111 112, on right: 108
+attribute (126)
+    on left: 113 114, on right: 100 131 132 133
+from_clause (127)
+    on left: 115 116, on right: 81 116
+from_item (128)
+    on left: 117 118, on right: 115 116 147 148
+where_clause (129)
+    on left: 119 120, on right: 81 147 148
+condition (130)
+    on left: 121 122 123 124 125 126 127 128 129 130 131 132 133 134
+    135 136 137, on right: 120 127 128 129 130
+order_clause (131)
+    on left: 138, on right: 83
+group_clause (132)
+    on left: 139, on right: 84
+attributeorder_list (133)
+    on left: 140 141, on right: 138 141
+attributeorder_exp (134)
+    on left: 142 143 144, on right: 140 141
+attributeexp_list (135)
+    on left: 145 146, on right: 139 146
+delete_statement (136)
+    on left: 147, on right: 11
+update_statement (137)
+    on left: 148, on right: 14
+grant_statement (138)
+    on left: 149, on right: 15
+revoke_statement (139)
+    on left: 150, on right: 16
+grant_revoke_body (140)
+    on left: 151, on right: 149 150
+grantwho (141)
+    on left: 152 153, on right: 151
+tofrom (142)
+    on left: 154 155, on right: 151
+gritems (143)
+    on left: 156 157, on right: 151 157
+gritem (144)
+    on left: 158 159 160 161 162 163 164, on right: 156 157
+with_grant (145)
+    on left: 165 166, on right: 151
+
+
+state 0
+
+    CREATE	shift, and go to state 1
+    DROP	shift, and go to state 2
+    USER	shift, and go to state 3
+    SET 	shift, and go to state 4
+    OPEN	shift, and go to state 5
+    SYNC	shift, and go to state 6
+    INSERT	shift, and go to state 7
+    HELP	shift, and go to state 8
+    SELECT	shift, and go to state 9
+    UPDATE	shift, and go to state 10
+    DELETE	shift, and go to state 11
+    GRANT	shift, and go to state 12
+    REVOKE	shift, and go to state 13
+
+    start	go to state 293
+    statement_list	go to state 14
+    statement	go to state 15
+    open_statement	go to state 16
+    user_statement	go to state 17
+    create_statement	go to state 18
+    drop_statement	go to state 19
+    set_statement	go to state 20
+    insert_statement	go to state 21
+    select_statement	go to state 22
+    delete_statement	go to state 23
+    update_statement	go to state 24
+    grant_statement	go to state 25
+    revoke_statement	go to state 26
+
+
+
+state 1
+
+    create_statement  ->  CREATE . DATABASE create_database   (rule 23)
+    create_statement  ->  CREATE . TABLE create_table   (rule 24)
+    create_statement  ->  CREATE . TABLE IDENTIFIER AS select_statement   (rule 25)
+    create_statement  ->  CREATE . USER create_user   (rule 26)
+
+    DATABASE	shift, and go to state 27
+    USER	shift, and go to state 28
+    TABLE	shift, and go to state 29
+
+
+
+state 2
+
+    drop_statement  ->  DROP . TABLE IDENTIFIER cascade_or_restrict   (rule 60)
+    drop_statement  ->  DROP . DATABASE IDENTIFIER cascade_or_restrict   (rule 61)
+
+    DATABASE	shift, and go to state 30
+    TABLE	shift, and go to state 31
+
+
+
+state 3
+
+    user_statement  ->  USER . IDENTIFIER PASSWORD IDENTIFIER   (rule 20)
+    user_statement  ->  USER . IDENTIFIER PASSWORD STRING   (rule 21)
+    user_statement  ->  USER . IDENTIFIER   (rule 22)
+
+    IDENTIFIER	shift, and go to state 32
+
+
+
+state 4
+
+    set_statement  ->  SET . IDENTIFIER   (rule 65)
+    set_statement  ->  SET . IDENTIFIER EQUALS IDENTIFIER   (rule 66)
+    set_statement  ->  SET . IDENTIFIER EQUALS STRING   (rule 67)
+
+    IDENTIFIER	shift, and go to state 33
+
+
+
+state 5
+
+    open_statement  ->  OPEN . IDENTIFIER   (rule 19)
+
+    IDENTIFIER	shift, and go to state 34
+
+
+
+state 6
+
+    statement  ->  SYNC .   (rule 18)
+
+    $default	reduce using rule 18 (statement)
+
+
+
+state 7
+
+    insert_statement  ->  INSERT . INTO IDENTIFIER VALUES OPENPAREN insert_values CLOSEPAREN   (rule 68)
+
+    INTO	shift, and go to state 35
+
+
+
+state 8
+
+    statement  ->  HELP . IDENTIFIER   (rule 17)
+
+    IDENTIFIER	shift, and go to state 36
+
+
+
+state 9
+
+    select_statement  ->  SELECT . select_clause FROM from_clause where_clause ordergroup   (rule 81)
+
+    IDENTIFIER	shift, and go to state 37
+    STRING	shift, and go to state 38
+    STRING1	shift, and go to state 39
+    NUMBER	shift, and go to state 40
+    FUNCTION	shift, and go to state 41
+    FLOATVAL	shift, and go to state 42
+    MONEYVAL	shift, and go to state 43
+    DATEVAL	shift, and go to state 44
+    TNULL	shift, and go to state 45
+    DATE	shift, and go to state 46
+    SUM 	shift, and go to state 47
+    COUNT	shift, and go to state 48
+    AVG 	shift, and go to state 49
+    MIN 	shift, and go to state 50
+    MAX 	shift, and go to state 51
+    OPENPAREN	shift, and go to state 52
+    ROWNUM	shift, and go to state 53
+    PLUS	shift, and go to state 54
+    MINUS	shift, and go to state 55
+    STAR	shift, and go to state 56
+
+    insert_value	go to state 57
+    select_clause	go to state 58
+    select_clause_list	go to state 59
+    select_element	go to state 60
+    column_expression	go to state 61
+    column_function	go to state 62
+    attribute_expression	go to state 63
+    procedure	go to state 64
+    attribute	go to state 65
+
+
+
+state 10
+
+    update_statement  ->  UPDATE . from_item SET IDENTIFIER EQUALS attribute_expression where_clause   (rule 148)
+
+    IDENTIFIER	shift, and go to state 66
+
+    from_item	go to state 67
+
+
+
+state 11
+
+    delete_statement  ->  DELETE . FROM from_item where_clause   (rule 147)
+
+    FROM	shift, and go to state 68
+
+
+
+state 12
+
+    grant_statement  ->  GRANT . grant_revoke_body   (rule 149)
+
+    DROP	shift, and go to state 69
+    INSERT	shift, and go to state 70
+    SELECT	shift, and go to state 71
+    UPDATE	shift, and go to state 72
+    DELETE	shift, and go to state 73
+    ALL 	shift, and go to state 74
+
+    grant_revoke_body	go to state 75
+    gritems	go to state 76
+    gritem	go to state 77
+
+
+
+state 13
+
+    revoke_statement  ->  REVOKE . grant_revoke_body   (rule 150)
+
+    DROP	shift, and go to state 69
+    INSERT	shift, and go to state 70
+    SELECT	shift, and go to state 71
+    UPDATE	shift, and go to state 72
+    DELETE	shift, and go to state 73
+    ALL 	shift, and go to state 74
+
+    grant_revoke_body	go to state 78
+    gritems	go to state 76
+    gritem	go to state 77
+
+
+
+state 14
+
+    start  ->  statement_list .   (rule 1)
+    statement_list  ->  statement_list . statement semi   (rule 3)
+
+    CREATE	shift, and go to state 1
+    DROP	shift, and go to state 2
+    USER	shift, and go to state 3
+    SET 	shift, and go to state 4
+    OPEN	shift, and go to state 5
+    SYNC	shift, and go to state 6
+    INSERT	shift, and go to state 7
+    HELP	shift, and go to state 8
+    SELECT	shift, and go to state 9
+    UPDATE	shift, and go to state 10
+    DELETE	shift, and go to state 11
+    GRANT	shift, and go to state 12
+    REVOKE	shift, and go to state 13
+
+    $default	reduce using rule 1 (start)
+
+    statement	go to state 79
+    open_statement	go to state 16
+    user_statement	go to state 17
+    create_statement	go to state 18
+    drop_statement	go to state 19
+    set_statement	go to state 20
+    insert_statement	go to state 21
+    select_statement	go to state 22
+    delete_statement	go to state 23
+    update_statement	go to state 24
+    grant_statement	go to state 25
+    revoke_statement	go to state 26
+
+
+
+state 15
+
+    statement_list  ->  statement . semi   (rule 2)
+
+    SEMICOLON	shift, and go to state 80
+
+    $default	reduce using rule 5 (semi)
+
+    semi	go to state 81
+
+
+
+state 16
+
+    statement  ->  open_statement .   (rule 10)
+
+    $default	reduce using rule 10 (statement)
+
+
+
+state 17
+
+    statement  ->  user_statement .   (rule 7)
+
+    $default	reduce using rule 7 (statement)
+
+
+
+state 18
+
+    statement  ->  create_statement .   (rule 6)
+
+    $default	reduce using rule 6 (statement)
+
+
+
+state 19
+
+    statement  ->  drop_statement .   (rule 8)
+
+    $default	reduce using rule 8 (statement)
+
+
+
+state 20
+
+    statement  ->  set_statement .   (rule 9)
+
+    $default	reduce using rule 9 (statement)
+
+
+
+state 21
+
+    statement  ->  insert_statement .   (rule 12)
+
+    $default	reduce using rule 12 (statement)
+
+
+
+state 22
+
+    statement  ->  select_statement .   (rule 13)
+
+    $default	reduce using rule 13 (statement)
+
+
+
+state 23
+
+    statement  ->  delete_statement .   (rule 11)
+
+    $default	reduce using rule 11 (statement)
+
+
+
+state 24
+
+    statement  ->  update_statement .   (rule 14)
+
+    $default	reduce using rule 14 (statement)
+
+
+
+state 25
+
+    statement  ->  grant_statement .   (rule 15)
+
+    $default	reduce using rule 15 (statement)
+
+
+
+state 26
+
+    statement  ->  revoke_statement .   (rule 16)
+
+    $default	reduce using rule 16 (statement)
+
+
+
+state 27
+
+    create_statement  ->  CREATE DATABASE . create_database   (rule 23)
+
+    IDENTIFIER	shift, and go to state 82
+
+    create_database	go to state 83
+
+
+
+state 28
+
+    create_statement  ->  CREATE USER . create_user   (rule 26)
+
+    IDENTIFIER	shift, and go to state 84
+
+    create_user	go to state 85
+
+
+
+state 29
+
+    create_statement  ->  CREATE TABLE . create_table   (rule 24)
+    create_statement  ->  CREATE TABLE . IDENTIFIER AS select_statement   (rule 25)
+
+    IDENTIFIER	shift, and go to state 86
+
+    create_table	go to state 87
+
+
+
+state 30
+
+    drop_statement  ->  DROP DATABASE . IDENTIFIER cascade_or_restrict   (rule 61)
+
+    IDENTIFIER	shift, and go to state 88
+
+
+
+state 31
+
+    drop_statement  ->  DROP TABLE . IDENTIFIER cascade_or_restrict   (rule 60)
+
+    IDENTIFIER	shift, and go to state 89
+
+
+
+state 32
+
+    user_statement  ->  USER IDENTIFIER . PASSWORD IDENTIFIER   (rule 20)
+    user_statement  ->  USER IDENTIFIER . PASSWORD STRING   (rule 21)
+    user_statement  ->  USER IDENTIFIER .   (rule 22)
+
+    PASSWORD	shift, and go to state 90
+
+    $default	reduce using rule 22 (user_statement)
+
+
+
+state 33
+
+    set_statement  ->  SET IDENTIFIER .   (rule 65)
+    set_statement  ->  SET IDENTIFIER . EQUALS IDENTIFIER   (rule 66)
+    set_statement  ->  SET IDENTIFIER . EQUALS STRING   (rule 67)
+
+    EQUALS	shift, and go to state 91
+
+    $default	reduce using rule 65 (set_statement)
+
+
+
+state 34
+
+    open_statement  ->  OPEN IDENTIFIER .   (rule 19)
+
+    $default	reduce using rule 19 (open_statement)
+
+
+
+state 35
+
+    insert_statement  ->  INSERT INTO . IDENTIFIER VALUES OPENPAREN insert_values CLOSEPAREN   (rule 68)
+
+    IDENTIFIER	shift, and go to state 92
+
+
+
+state 36
+
+    statement  ->  HELP IDENTIFIER .   (rule 17)
+
+    $default	reduce using rule 17 (statement)
+
+
+
+state 37
+
+    attribute  ->  IDENTIFIER .   (rule 113)
+    attribute  ->  IDENTIFIER . DOT IDENTIFIER   (rule 114)
+
+    DOT 	shift, and go to state 93
+
+    $default	reduce using rule 113 (attribute)
+
+
+
+state 38
+
+    insert_value  ->  STRING .   (rule 74)
+
+    $default	reduce using rule 74 (insert_value)
+
+
+
+state 39
+
+    insert_value  ->  STRING1 .   (rule 75)
+
+    $default	reduce using rule 75 (insert_value)
+
+
+
+state 40
+
+    insert_value  ->  NUMBER .   (rule 76)
+
+    $default	reduce using rule 76 (insert_value)
+
+
+
+state 41
+
+    attribute_expression  ->  FUNCTION . OPENPAREN attribute_expression CLOSEPAREN   (rule 107)
+
+    OPENPAREN	shift, and go to state 94
+
+
+
+state 42
+
+    insert_value  ->  FLOATVAL .   (rule 77)
+
+    $default	reduce using rule 77 (insert_value)
+
+
+
+state 43
+
+    insert_value  ->  MONEYVAL .   (rule 78)
+
+    $default	reduce using rule 78 (insert_value)
+
+
+
+state 44
+
+    insert_value  ->  DATEVAL .   (rule 79)
+
+    $default	reduce using rule 79 (insert_value)
+
+
+
+state 45
+
+    insert_value  ->  TNULL .   (rule 80)
+
+    $default	reduce using rule 80 (insert_value)
+
+
+
+state 46
+
+    procedure  ->  DATE .   (rule 111)
+
+    $default	reduce using rule 111 (procedure)
+
+
+
+state 47
+
+    column_function  ->  SUM .   (rule 97)
+
+    $default	reduce using rule 97 (column_function)
+
+
+
+state 48
+
+    column_function  ->  COUNT .   (rule 94)
+
+    $default	reduce using rule 94 (column_function)
+
+
+
+state 49
+
+    column_function  ->  AVG .   (rule 93)
+
+    $default	reduce using rule 93 (column_function)
+
+
+
+state 50
+
+    column_function  ->  MIN .   (rule 96)
+
+    $default	reduce using rule 96 (column_function)
+
+
+
+state 51
+
+    column_function  ->  MAX .   (rule 95)
+
+    $default	reduce using rule 95 (column_function)
+
+
+
+state 52
+
+    attribute_expression  ->  OPENPAREN . attribute_expression CLOSEPAREN   (rule 110)
+
+    IDENTIFIER	shift, and go to state 37
+    STRING	shift, and go to state 38
+    STRING1	shift, and go to state 39
+    NUMBER	shift, and go to state 40
+    FUNCTION	shift, and go to state 41
+    FLOATVAL	shift, and go to state 42
+    MONEYVAL	shift, and go to state 43
+    DATEVAL	shift, and go to state 44
+    TNULL	shift, and go to state 45
+    DATE	shift, and go to state 46
+    OPENPAREN	shift, and go to state 52
+    ROWNUM	shift, and go to state 53
+    PLUS	shift, and go to state 54
+    MINUS	shift, and go to state 55
+
+    insert_value	go to state 57
+    attribute_expression	go to state 95
+    procedure	go to state 64
+    attribute	go to state 65
+
+
+
+state 53
+
+    procedure  ->  ROWNUM .   (rule 112)
+
+    $default	reduce using rule 112 (procedure)
+
+
+
+state 54
+
+    attribute_expression  ->  PLUS . attribute_expression   (rule 106)
+
+    IDENTIFIER	shift, and go to state 37
+    STRING	shift, and go to state 38
+    STRING1	shift, and go to state 39
+    NUMBER	shift, and go to state 40
+    FUNCTION	shift, and go to state 41
+    FLOATVAL	shift, and go to state 42
+    MONEYVAL	shift, and go to state 43
+    DATEVAL	shift, and go to state 44
+    TNULL	shift, and go to state 45
+    DATE	shift, and go to state 46
+    OPENPAREN	shift, and go to state 52
+    ROWNUM	shift, and go to state 53
+    PLUS	shift, and go to state 54
+    MINUS	shift, and go to state 55
+
+    insert_value	go to state 57
+    attribute_expression	go to state 96
+    procedure	go to state 64
+    attribute	go to state 65
+
+
+
+state 55
+
+    attribute_expression  ->  MINUS . attribute_expression   (rule 105)
+
+    IDENTIFIER	shift, and go to state 37
+    STRING	shift, and go to state 38
+    STRING1	shift, and go to state 39
+    NUMBER	shift, and go to state 40
+    FUNCTION	shift, and go to state 41
+    FLOATVAL	shift, and go to state 42
+    MONEYVAL	shift, and go to state 43
+    DATEVAL	shift, and go to state 44
+    TNULL	shift, and go to state 45
+    DATE	shift, and go to state 46
+    OPENPAREN	shift, and go to state 52
+    ROWNUM	shift, and go to state 53
+    PLUS	shift, and go to state 54
+    MINUS	shift, and go to state 55
+
+    insert_value	go to state 57
+    attribute_expression	go to state 97
+    procedure	go to state 64
+    attribute	go to state 65
+
+
+
+state 56
+
+    select_clause  ->  STAR .   (rule 85)
+
+    $default	reduce using rule 85 (select_clause)
+
+
+
+state 57
+
+    attribute_expression  ->  insert_value .   (rule 109)
+
+    $default	reduce using rule 109 (attribute_expression)
+
+
+
+state 58
+
+    select_statement  ->  SELECT select_clause . FROM from_clause where_clause ordergroup   (rule 81)
+
+    FROM	shift, and go to state 98
+
+
+
+state 59
+
+    select_clause  ->  select_clause_list .   (rule 86)
+
+    $default	reduce using rule 86 (select_clause)
+
+
+
+state 60
+
+    select_clause_list  ->  select_element .   (rule 87)
+    select_clause_list  ->  select_element . COMMA select_clause_list   (rule 88)
+
+    COMMA	shift, and go to state 99
+
+    $default	reduce using rule 87 (select_clause_list)
+
+
+
+state 61
+
+    select_element  ->  column_expression .   (rule 89)
+    select_element  ->  column_expression . AS IDENTIFIER   (rule 90)
+
+    AS  	shift, and go to state 100
+
+    $default	reduce using rule 89 (select_element)
+
+
+
+state 62
+
+    column_expression  ->  column_function . OPENPAREN func_ident CLOSEPAREN   (rule 91)
+
+    OPENPAREN	shift, and go to state 101
+
+
+
+state 63
+
+    column_expression  ->  attribute_expression .   (rule 92)
+    attribute_expression  ->  attribute_expression . PLUS attribute_expression   (rule 101)
+    attribute_expression  ->  attribute_expression . MINUS attribute_expression   (rule 102)
+    attribute_expression  ->  attribute_expression . SLASH attribute_expression   (rule 103)
+    attribute_expression  ->  attribute_expression . STAR attribute_expression   (rule 104)
+
+    PLUS	shift, and go to state 102
+    MINUS	shift, and go to state 103
+    STAR	shift, and go to state 104
+    SLASH	shift, and go to state 105
+
+    $default	reduce using rule 92 (column_expression)
+
+
+
+state 64
+
+    attribute_expression  ->  procedure . OPENPAREN CLOSEPAREN   (rule 108)
+
+    OPENPAREN	shift, and go to state 106
+
+
+
+state 65
+
+    attribute_expression  ->  attribute .   (rule 100)
+
+    $default	reduce using rule 100 (attribute_expression)
+
+
+
+state 66
+
+    from_item  ->  IDENTIFIER .   (rule 117)
+    from_item  ->  IDENTIFIER . IDENTIFIER   (rule 118)
+
+    IDENTIFIER	shift, and go to state 107
+
+    $default	reduce using rule 117 (from_item)
+
+
+
+state 67
+
+    update_statement  ->  UPDATE from_item . SET IDENTIFIER EQUALS attribute_expression where_clause   (rule 148)
+
+    SET 	shift, and go to state 108
+
+
+
+state 68
+
+    delete_statement  ->  DELETE FROM . from_item where_clause   (rule 147)
+
+    IDENTIFIER	shift, and go to state 66
+
+    from_item	go to state 109
+
+
+
+state 69
+
+    gritem  ->  DROP .   (rule 162)
+
+    $default	reduce using rule 162 (gritem)
+
+
+
+state 70
+
+    gritem  ->  INSERT .   (rule 159)
+
+    $default	reduce using rule 159 (gritem)
+
+
+
+state 71
+
+    gritem  ->  SELECT .   (rule 158)
+
+    $default	reduce using rule 158 (gritem)
+
+
+
+state 72
+
+    gritem  ->  UPDATE .   (rule 161)
+
+    $default	reduce using rule 161 (gritem)
+
+
+
+state 73
+
+    gritem  ->  DELETE .   (rule 160)
+
+    $default	reduce using rule 160 (gritem)
+
+
+
+state 74
+
+    gritem  ->  ALL .   (rule 163)
+    gritem  ->  ALL . PRIVILEGES   (rule 164)
+
+    PRIVILEGES	shift, and go to state 110
+
+    $default	reduce using rule 163 (gritem)
+
+
+
+state 75
+
+    grant_statement  ->  GRANT grant_revoke_body .   (rule 149)
+
+    $default	reduce using rule 149 (grant_statement)
+
+
+
+state 76
+
+    grant_revoke_body  ->  gritems . ON ident_list tofrom grantwho with_grant   (rule 151)
+    gritems  ->  gritems . COMMA gritem   (rule 157)
+
+    COMMA	shift, and go to state 111
+    ON  	shift, and go to state 112
+
+
+
+state 77
+
+    gritems  ->  gritem .   (rule 156)
+
+    $default	reduce using rule 156 (gritems)
+
+
+
+state 78
+
+    revoke_statement  ->  REVOKE grant_revoke_body .   (rule 150)
+
+    $default	reduce using rule 150 (revoke_statement)
+
+
+
+state 79
+
+    statement_list  ->  statement_list statement . semi   (rule 3)
+
+    SEMICOLON	shift, and go to state 80
+
+    $default	reduce using rule 5 (semi)
+
+    semi	go to state 113
+
+
+
+state 80
+
+    semi  ->  SEMICOLON .   (rule 4)
+
+    $default	reduce using rule 4 (semi)
+
+
+
+state 81
+
+    statement_list  ->  statement semi .   (rule 2)
+
+    $default	reduce using rule 2 (statement_list)
+
+
+
+state 82
+
+    create_database  ->  IDENTIFIER . AUTHORIZATION IDENTIFIER   (rule 30)
+    create_database  ->  IDENTIFIER .   (rule 31)
+
+    AUTHORIZATION	shift, and go to state 114
+
+    $default	reduce using rule 31 (create_database)
+
+
+
+state 83
+
+    create_statement  ->  CREATE DATABASE create_database .   (rule 23)
+
+    $default	reduce using rule 23 (create_statement)
+
+
+
+state 84
+
+    create_user  ->  IDENTIFIER .   (rule 27)
+    create_user  ->  IDENTIFIER . PASSWORD IDENTIFIER   (rule 28)
+    create_user  ->  IDENTIFIER . PASSWORD STRING   (rule 29)
+
+    PASSWORD	shift, and go to state 115
+
+    $default	reduce using rule 27 (create_user)
+
+
+
+state 85
+
+    create_statement  ->  CREATE USER create_user .   (rule 26)
+
+    $default	reduce using rule 26 (create_statement)
+
+
+
+state 86
+
+    create_statement  ->  CREATE TABLE IDENTIFIER . AS select_statement   (rule 25)
+    create_table  ->  IDENTIFIER . OPENPAREN table_def key_clause CLOSEPAREN   (rule 32)
+
+    AS  	shift, and go to state 116
+    OPENPAREN	shift, and go to state 117
+
+
+
+state 87
+
+    create_statement  ->  CREATE TABLE create_table .   (rule 24)
+
+    $default	reduce using rule 24 (create_statement)
+
+
+
+state 88
+
+    drop_statement  ->  DROP DATABASE IDENTIFIER . cascade_or_restrict   (rule 61)
+
+    CASCADE	shift, and go to state 118
+    RESTRICT	shift, and go to state 119
+
+    $default	reduce using rule 62 (cascade_or_restrict)
+
+    cascade_or_restrict	go to state 120
+
+
+
+state 89
+
+    drop_statement  ->  DROP TABLE IDENTIFIER . cascade_or_restrict   (rule 60)
+
+    CASCADE	shift, and go to state 118
+    RESTRICT	shift, and go to state 119
+
+    $default	reduce using rule 62 (cascade_or_restrict)
+
+    cascade_or_restrict	go to state 121
+
+
+
+state 90
+
+    user_statement  ->  USER IDENTIFIER PASSWORD . IDENTIFIER   (rule 20)
+    user_statement  ->  USER IDENTIFIER PASSWORD . STRING   (rule 21)
+
+    IDENTIFIER	shift, and go to state 122
+    STRING	shift, and go to state 123
+
+
+
+state 91
+
+    set_statement  ->  SET IDENTIFIER EQUALS . IDENTIFIER   (rule 66)
+    set_statement  ->  SET IDENTIFIER EQUALS . STRING   (rule 67)
+
+    IDENTIFIER	shift, and go to state 124
+    STRING	shift, and go to state 125
+
+
+
+state 92
+
+    insert_statement  ->  INSERT INTO IDENTIFIER . VALUES OPENPAREN insert_values CLOSEPAREN   (rule 68)
+
+    VALUES	shift, and go to state 126
+
+
+
+state 93
+
+    attribute  ->  IDENTIFIER DOT . IDENTIFIER   (rule 114)
+
+    IDENTIFIER	shift, and go to state 127
+
+
+
+state 94
+
+    attribute_expression  ->  FUNCTION OPENPAREN . attribute_expression CLOSEPAREN   (rule 107)
+
+    IDENTIFIER	shift, and go to state 37
+    STRING	shift, and go to state 38
+    STRING1	shift, and go to state 39
+    NUMBER	shift, and go to state 40
+    FUNCTION	shift, and go to state 41
+    FLOATVAL	shift, and go to state 42
+    MONEYVAL	shift, and go to state 43
+    DATEVAL	shift, and go to state 44
+    TNULL	shift, and go to state 45
+    DATE	shift, and go to state 46
+    OPENPAREN	shift, and go to state 52
+    ROWNUM	shift, and go to state 53
+    PLUS	shift, and go to state 54
+    MINUS	shift, and go to state 55
+
+    insert_value	go to state 57
+    attribute_expression	go to state 128
+    procedure	go to state 64
+    attribute	go to state 65
+
+
+
+state 95
+
+    attribute_expression  ->  attribute_expression . PLUS attribute_expression   (rule 101)
+    attribute_expression  ->  attribute_expression . MINUS attribute_expression   (rule 102)
+    attribute_expression  ->  attribute_expression . SLASH attribute_expression   (rule 103)
+    attribute_expression  ->  attribute_expression . STAR attribute_expression   (rule 104)
+    attribute_expression  ->  OPENPAREN attribute_expression . CLOSEPAREN   (rule 110)
+
+    CLOSEPAREN	shift, and go to state 129
+    PLUS	shift, and go to state 102
+    MINUS	shift, and go to state 103
+    STAR	shift, and go to state 104
+    SLASH	shift, and go to state 105
+
+
+
+state 96
+
+    attribute_expression  ->  attribute_expression . PLUS attribute_expression   (rule 101)
+    attribute_expression  ->  attribute_expression . MINUS attribute_expression   (rule 102)
+    attribute_expression  ->  attribute_expression . SLASH attribute_expression   (rule 103)
+    attribute_expression  ->  attribute_expression . STAR attribute_expression   (rule 104)
+    attribute_expression  ->  PLUS attribute_expression .   (rule 106)
+
+
+    $default	reduce using rule 106 (attribute_expression)
+
+
+
+state 97
+
+    attribute_expression  ->  attribute_expression . PLUS attribute_expression   (rule 101)
+    attribute_expression  ->  attribute_expression . MINUS attribute_expression   (rule 102)
+    attribute_expression  ->  attribute_expression . SLASH attribute_expression   (rule 103)
+    attribute_expression  ->  attribute_expression . STAR attribute_expression   (rule 104)
+    attribute_expression  ->  MINUS attribute_expression .   (rule 105)
+
+
+    $default	reduce using rule 105 (attribute_expression)
+
+
+
+state 98
+
+    select_statement  ->  SELECT select_clause FROM . from_clause where_clause ordergroup   (rule 81)
+
+    IDENTIFIER	shift, and go to state 66
+
+    from_clause	go to state 130
+    from_item	go to state 131
+
+
+
+state 99
+
+    select_clause_list  ->  select_element COMMA . select_clause_list   (rule 88)
+
+    IDENTIFIER	shift, and go to state 37
+    STRING	shift, and go to state 38
+    STRING1	shift, and go to state 39
+    NUMBER	shift, and go to state 40
+    FUNCTION	shift, and go to state 41
+    FLOATVAL	shift, and go to state 42
+    MONEYVAL	shift, and go to state 43
+    DATEVAL	shift, and go to state 44
+    TNULL	shift, and go to state 45
+    DATE	shift, and go to state 46
+    SUM 	shift, and go to state 47
+    COUNT	shift, and go to state 48
+    AVG 	shift, and go to state 49
+    MIN 	shift, and go to state 50
+    MAX 	shift, and go to state 51
+    OPENPAREN	shift, and go to state 52
+    ROWNUM	shift, and go to state 53
+    PLUS	shift, and go to state 54
+    MINUS	shift, and go to state 55
+
+    insert_value	go to state 57
+    select_clause_list	go to state 132
+    select_element	go to state 60
+    column_expression	go to state 61
+    column_function	go to state 62
+    attribute_expression	go to state 63
+    procedure	go to state 64
+    attribute	go to state 65
+
+
+
+state 100
+
+    select_element  ->  column_expression AS . IDENTIFIER   (rule 90)
+
+    IDENTIFIER	shift, and go to state 133
+
+
+
+state 101
+
+    column_expression  ->  column_function OPENPAREN . func_ident CLOSEPAREN   (rule 91)
+
+    IDENTIFIER	shift, and go to state 37
+    STRING	shift, and go to state 38
+    STRING1	shift, and go to state 39
+    NUMBER	shift, and go to state 40
+    FUNCTION	shift, and go to state 41
+    FLOATVAL	shift, and go to state 42
+    MONEYVAL	shift, and go to state 43
+    DATEVAL	shift, and go to state 44
+    TNULL	shift, and go to state 45
+    DATE	shift, and go to state 46
+    OPENPAREN	shift, and go to state 52
+    ROWNUM	shift, and go to state 53
+    PLUS	shift, and go to state 54
+    MINUS	shift, and go to state 55
+    STAR	shift, and go to state 134
+
+    insert_value	go to state 57
+    func_ident	go to state 135
+    attribute_expression	go to state 136
+    procedure	go to state 64
+    attribute	go to state 65
+
+
+
+state 102
+
+    attribute_expression  ->  attribute_expression PLUS . attribute_expression   (rule 101)
+
+    IDENTIFIER	shift, and go to state 37
+    STRING	shift, and go to state 38
+    STRING1	shift, and go to state 39
+    NUMBER	shift, and go to state 40
+    FUNCTION	shift, and go to state 41
+    FLOATVAL	shift, and go to state 42
+    MONEYVAL	shift, and go to state 43
+    DATEVAL	shift, and go to state 44
+    TNULL	shift, and go to state 45
+    DATE	shift, and go to state 46
+    OPENPAREN	shift, and go to state 52
+    ROWNUM	shift, and go to state 53
+    PLUS	shift, and go to state 54
+    MINUS	shift, and go to state 55
+
+    insert_value	go to state 57
+    attribute_expression	go to state 137
+    procedure	go to state 64
+    attribute	go to state 65
+
+
+
+state 103
+
+    attribute_expression  ->  attribute_expression MINUS . attribute_expression   (rule 102)
+
+    IDENTIFIER	shift, and go to state 37
+    STRING	shift, and go to state 38
+    STRING1	shift, and go to state 39
+    NUMBER	shift, and go to state 40
+    FUNCTION	shift, and go to state 41
+    FLOATVAL	shift, and go to state 42
+    MONEYVAL	shift, and go to state 43
+    DATEVAL	shift, and go to state 44
+    TNULL	shift, and go to state 45
+    DATE	shift, and go to state 46
+    OPENPAREN	shift, and go to state 52
+    ROWNUM	shift, and go to state 53
+    PLUS	shift, and go to state 54
+    MINUS	shift, and go to state 55
+
+    insert_value	go to state 57
+    attribute_expression	go to state 138
+    procedure	go to state 64
+    attribute	go to state 65
+
+
+
+state 104
+
+    attribute_expression  ->  attribute_expression STAR . attribute_expression   (rule 104)
+
+    IDENTIFIER	shift, and go to state 37
+    STRING	shift, and go to state 38
+    STRING1	shift, and go to state 39
+    NUMBER	shift, and go to state 40
+    FUNCTION	shift, and go to state 41
+    FLOATVAL	shift, and go to state 42
+    MONEYVAL	shift, and go to state 43
+    DATEVAL	shift, and go to state 44
+    TNULL	shift, and go to state 45
+    DATE	shift, and go to state 46
+    OPENPAREN	shift, and go to state 52
+    ROWNUM	shift, and go to state 53
+    PLUS	shift, and go to state 54
+    MINUS	shift, and go to state 55
+
+    insert_value	go to state 57
+    attribute_expression	go to state 139
+    procedure	go to state 64
+    attribute	go to state 65
+
+
+
+state 105
+
+    attribute_expression  ->  attribute_expression SLASH . attribute_expression   (rule 103)
+
+    IDENTIFIER	shift, and go to state 37
+    STRING	shift, and go to state 38
+    STRING1	shift, and go to state 39
+    NUMBER	shift, and go to state 40
+    FUNCTION	shift, and go to state 41
+    FLOATVAL	shift, and go to state 42
+    MONEYVAL	shift, and go to state 43
+    DATEVAL	shift, and go to state 44
+    TNULL	shift, and go to state 45
+    DATE	shift, and go to state 46
+    OPENPAREN	shift, and go to state 52
+    ROWNUM	shift, and go to state 53
+    PLUS	shift, and go to state 54
+    MINUS	shift, and go to state 55
+
+    insert_value	go to state 57
+    attribute_expression	go to state 140
+    procedure	go to state 64
+    attribute	go to state 65
+
+
+
+state 106
+
+    attribute_expression  ->  procedure OPENPAREN . CLOSEPAREN   (rule 108)
+
+    CLOSEPAREN	shift, and go to state 141
+
+
+
+state 107
+
+    from_item  ->  IDENTIFIER IDENTIFIER .   (rule 118)
+
+    $default	reduce using rule 118 (from_item)
+
+
+
+state 108
+
+    update_statement  ->  UPDATE from_item SET . IDENTIFIER EQUALS attribute_expression where_clause   (rule 148)
+
+    IDENTIFIER	shift, and go to state 142
+
+
+
+state 109
+
+    delete_statement  ->  DELETE FROM from_item . where_clause   (rule 147)
+
+    WHERE	shift, and go to state 143
+
+    $default	reduce using rule 119 (where_clause)
+
+    where_clause	go to state 144
+
+
+
+state 110
+
+    gritem  ->  ALL PRIVILEGES .   (rule 164)
+
+    $default	reduce using rule 164 (gritem)
+
+
+
+state 111
+
+    gritems  ->  gritems COMMA . gritem   (rule 157)
+
+    DROP	shift, and go to state 69
+    INSERT	shift, and go to state 70
+    SELECT	shift, and go to state 71
+    UPDATE	shift, and go to state 72
+    DELETE	shift, and go to state 73
+    ALL 	shift, and go to state 74
+
+    gritem	go to state 145
+
+
+
+state 112
+
+    grant_revoke_body  ->  gritems ON . ident_list tofrom grantwho with_grant   (rule 151)
+
+    IDENTIFIER	shift, and go to state 146
+
+    ident_list	go to state 147
+
+
+
+state 113
+
+    statement_list  ->  statement_list statement semi .   (rule 3)
+
+    $default	reduce using rule 3 (statement_list)
+
+
+
+state 114
+
+    create_database  ->  IDENTIFIER AUTHORIZATION . IDENTIFIER   (rule 30)
+
+    IDENTIFIER	shift, and go to state 148
+
+
+
+state 115
+
+    create_user  ->  IDENTIFIER PASSWORD . IDENTIFIER   (rule 28)
+    create_user  ->  IDENTIFIER PASSWORD . STRING   (rule 29)
+
+    IDENTIFIER	shift, and go to state 149
+    STRING	shift, and go to state 150
+
+
+
+state 116
+
+    create_statement  ->  CREATE TABLE IDENTIFIER AS . select_statement   (rule 25)
+
+    SELECT	shift, and go to state 9
+
+    select_statement	go to state 151
+
+
+
+state 117
+
+    create_table  ->  IDENTIFIER OPENPAREN . table_def key_clause CLOSEPAREN   (rule 32)
+
+    IDENTIFIER	shift, and go to state 152
+
+    table_def	go to state 153
+    table_def_entry	go to state 154
+
+
+
+state 118
+
+    cascade_or_restrict  ->  CASCADE .   (rule 63)
+
+    $default	reduce using rule 63 (cascade_or_restrict)
+
+
+
+state 119
+
+    cascade_or_restrict  ->  RESTRICT .   (rule 64)
+
+    $default	reduce using rule 64 (cascade_or_restrict)
+
+
+
+state 120
+
+    drop_statement  ->  DROP DATABASE IDENTIFIER cascade_or_restrict .   (rule 61)
+
+    $default	reduce using rule 61 (drop_statement)
+
+
+
+state 121
+
+    drop_statement  ->  DROP TABLE IDENTIFIER cascade_or_restrict .   (rule 60)
+
+    $default	reduce using rule 60 (drop_statement)
+
+
+
+state 122
+
+    user_statement  ->  USER IDENTIFIER PASSWORD IDENTIFIER .   (rule 20)
+
+    $default	reduce using rule 20 (user_statement)
+
+
+
+state 123
+
+    user_statement  ->  USER IDENTIFIER PASSWORD STRING .   (rule 21)
+
+    $default	reduce using rule 21 (user_statement)
+
+
+
+state 124
+
+    set_statement  ->  SET IDENTIFIER EQUALS IDENTIFIER .   (rule 66)
+
+    $default	reduce using rule 66 (set_statement)
+
+
+
+state 125
+
+    set_statement  ->  SET IDENTIFIER EQUALS STRING .   (rule 67)
+
+    $default	reduce using rule 67 (set_statement)
+
+
+
+state 126
+
+    insert_statement  ->  INSERT INTO IDENTIFIER VALUES . OPENPAREN insert_values CLOSEPAREN   (rule 68)
+
+    OPENPAREN	shift, and go to state 155
+
+
+
+state 127
+
+    attribute  ->  IDENTIFIER DOT IDENTIFIER .   (rule 114)
+
+    $default	reduce using rule 114 (attribute)
+
+
+
+state 128
+
+    attribute_expression  ->  attribute_expression . PLUS attribute_expression   (rule 101)
+    attribute_expression  ->  attribute_expression . MINUS attribute_expression   (rule 102)
+    attribute_expression  ->  attribute_expression . SLASH attribute_expression   (rule 103)
+    attribute_expression  ->  attribute_expression . STAR attribute_expression   (rule 104)
+    attribute_expression  ->  FUNCTION OPENPAREN attribute_expression . CLOSEPAREN   (rule 107)
+
+    CLOSEPAREN	shift, and go to state 156
+    PLUS	shift, and go to state 102
+    MINUS	shift, and go to state 103
+    STAR	shift, and go to state 104
+    SLASH	shift, and go to state 105
+
+
+
+state 129
+
+    attribute_expression  ->  OPENPAREN attribute_expression CLOSEPAREN .   (rule 110)
+
+    $default	reduce using rule 110 (attribute_expression)
+
+
+
+state 130
+
+    select_statement  ->  SELECT select_clause FROM from_clause . where_clause ordergroup   (rule 81)
+
+    WHERE	shift, and go to state 143
+
+    $default	reduce using rule 119 (where_clause)
+
+    where_clause	go to state 157
+
+
+
+state 131
+
+    from_clause  ->  from_item .   (rule 115)
+    from_clause  ->  from_item . COMMA from_clause   (rule 116)
+
+    COMMA	shift, and go to state 158
+
+    $default	reduce using rule 115 (from_clause)
+
+
+
+state 132
+
+    select_clause_list  ->  select_element COMMA select_clause_list .   (rule 88)
+
+    $default	reduce using rule 88 (select_clause_list)
+
+
+
+state 133
+
+    select_element  ->  column_expression AS IDENTIFIER .   (rule 90)
+
+    $default	reduce using rule 90 (select_element)
+
+
+
+state 134
+
+    func_ident  ->  STAR .   (rule 98)
+
+    $default	reduce using rule 98 (func_ident)
+
+
+
+state 135
+
+    column_expression  ->  column_function OPENPAREN func_ident . CLOSEPAREN   (rule 91)
+
+    CLOSEPAREN	shift, and go to state 159
+
+
+
+state 136
+
+    func_ident  ->  attribute_expression .   (rule 99)
+    attribute_expression  ->  attribute_expression . PLUS attribute_expression   (rule 101)
+    attribute_expression  ->  attribute_expression . MINUS attribute_expression   (rule 102)
+    attribute_expression  ->  attribute_expression . SLASH attribute_expression   (rule 103)
+    attribute_expression  ->  attribute_expression . STAR attribute_expression   (rule 104)
+
+    PLUS	shift, and go to state 102
+    MINUS	shift, and go to state 103
+    STAR	shift, and go to state 104
+    SLASH	shift, and go to state 105
+
+    $default	reduce using rule 99 (func_ident)
+
+
+
+state 137
+
+    attribute_expression  ->  attribute_expression . PLUS attribute_expression   (rule 101)
+    attribute_expression  ->  attribute_expression PLUS attribute_expression .   (rule 101)
+    attribute_expression  ->  attribute_expression . MINUS attribute_expression   (rule 102)
+    attribute_expression  ->  attribute_expression . SLASH attribute_expression   (rule 103)
+    attribute_expression  ->  attribute_expression . STAR attribute_expression   (rule 104)
+
+    STAR	shift, and go to state 104
+    SLASH	shift, and go to state 105
+
+    $default	reduce using rule 101 (attribute_expression)
+
+
+
+state 138
+
+    attribute_expression  ->  attribute_expression . PLUS attribute_expression   (rule 101)
+    attribute_expression  ->  attribute_expression . MINUS attribute_expression   (rule 102)
+    attribute_expression  ->  attribute_expression MINUS attribute_expression .   (rule 102)
+    attribute_expression  ->  attribute_expression . SLASH attribute_expression   (rule 103)
+    attribute_expression  ->  attribute_expression . STAR attribute_expression   (rule 104)
+
+    STAR	shift, and go to state 104
+    SLASH	shift, and go to state 105
+
+    $default	reduce using rule 102 (attribute_expression)
+
+
+
+state 139
+
+    attribute_expression  ->  attribute_expression . PLUS attribute_expression   (rule 101)
+    attribute_expression  ->  attribute_expression . MINUS attribute_expression   (rule 102)
+    attribute_expression  ->  attribute_expression . SLASH attribute_expression   (rule 103)
+    attribute_expression  ->  attribute_expression . STAR attribute_expression   (rule 104)
+    attribute_expression  ->  attribute_expression STAR attribute_expression .   (rule 104)
+
+
+    $default	reduce using rule 104 (attribute_expression)
+
+
+
+state 140
+
+    attribute_expression  ->  attribute_expression . PLUS attribute_expression   (rule 101)
+    attribute_expression  ->  attribute_expression . MINUS attribute_expression   (rule 102)
+    attribute_expression  ->  attribute_expression . SLASH attribute_expression   (rule 103)
+    attribute_expression  ->  attribute_expression SLASH attribute_expression .   (rule 103)
+    attribute_expression  ->  attribute_expression . STAR attribute_expression   (rule 104)
+
+
+    $default	reduce using rule 103 (attribute_expression)
+
+
+
+state 141
+
+    attribute_expression  ->  procedure OPENPAREN CLOSEPAREN .   (rule 108)
+
+    $default	reduce using rule 108 (attribute_expression)
+
+
+
+state 142
+
+    update_statement  ->  UPDATE from_item SET IDENTIFIER . EQUALS attribute_expression where_clause   (rule 148)
+
+    EQUALS	shift, and go to state 160
+
+
+
+state 143
+
+    where_clause  ->  WHERE . condition   (rule 120)
+
+    IDENTIFIER	shift, and go to state 37
+    STRING	shift, and go to state 38
+    STRING1	shift, and go to state 39
+    NUMBER	shift, and go to state 40
+    FUNCTION	shift, and go to state 41
+    FLOATVAL	shift, and go to state 42
+    MONEYVAL	shift, and go to state 43
+    DATEVAL	shift, and go to state 44
+    TNULL	shift, and go to state 45
+    DATE	shift, and go to state 46
+    OPENPAREN	shift, and go to state 161
+    EXISTS	shift, and go to state 162
+    ROWNUM	shift, and go to state 53
+    PLUS	shift, and go to state 54
+    MINUS	shift, and go to state 55
+    NOT 	shift, and go to state 163
+
+    insert_value	go to state 57
+    attribute_expression	go to state 164
+    procedure	go to state 64
+    attribute	go to state 165
+    condition	go to state 166
+
+
+
+state 144
+
+    delete_statement  ->  DELETE FROM from_item where_clause .   (rule 147)
+
+    $default	reduce using rule 147 (delete_statement)
+
+
+
+state 145
+
+    gritems  ->  gritems COMMA gritem .   (rule 157)
+
+    $default	reduce using rule 157 (gritems)
+
+
+
+state 146
+
+    ident_list  ->  IDENTIFIER .   (rule 46)
+    ident_list  ->  IDENTIFIER . COMMA ident_list   (rule 47)
+
+    COMMA	shift, and go to state 167
+
+    $default	reduce using rule 46 (ident_list)
+
+
+
+state 147
+
+    grant_revoke_body  ->  gritems ON ident_list . tofrom grantwho with_grant   (rule 151)
+
+    FROM	shift, and go to state 168
+    TO  	shift, and go to state 169
+
+    tofrom	go to state 170
+
+
+
+state 148
+
+    create_database  ->  IDENTIFIER AUTHORIZATION IDENTIFIER .   (rule 30)
+
+    $default	reduce using rule 30 (create_database)
+
+
+
+state 149
+
+    create_user  ->  IDENTIFIER PASSWORD IDENTIFIER .   (rule 28)
+
+    $default	reduce using rule 28 (create_user)
+
+
+
+state 150
+
+    create_user  ->  IDENTIFIER PASSWORD STRING .   (rule 29)
+
+    $default	reduce using rule 29 (create_user)
+
+
+
+state 151
+
+    create_statement  ->  CREATE TABLE IDENTIFIER AS select_statement .   (rule 25)
+
+    $default	reduce using rule 25 (create_statement)
+
+
+
+state 152
+
+    table_def_entry  ->  IDENTIFIER . attrtype nullspec   (rule 50)
+    table_def_entry  ->  IDENTIFIER . attrtype   (rule 51)
+
+    INTEGER	shift, and go to state 171
+    VARCHAR	shift, and go to state 172
+    DATE	shift, and go to state 173
+    MONEY	shift, and go to state 174
+    FLOAT	shift, and go to state 175
+    CHAR	shift, and go to state 176
+
+    attrtype	go to state 177
+
+
+
+state 153
+
+    create_table  ->  IDENTIFIER OPENPAREN table_def . key_clause CLOSEPAREN   (rule 32)
+
+    PRIMARY	shift, and go to state 178
+    FOREIGN	shift, and go to state 179
+
+    FOREIGN	[reduce using rule 36 (primary_clause)]
+    $default	reduce using rule 36 (primary_clause)
+
+    key_clause	go to state 180
+    primary_clause	go to state 181
+    foreign_clause	go to state 182
+    foreign_key	go to state 183
+
+
+
+state 154
+
+    table_def  ->  table_def_entry .   (rule 48)
+    table_def  ->  table_def_entry . COMMA table_def   (rule 49)
+
+    COMMA	shift, and go to state 184
+
+    $default	reduce using rule 48 (table_def)
+
+
+
+state 155
+
+    insert_statement  ->  INSERT INTO IDENTIFIER VALUES OPENPAREN . insert_values CLOSEPAREN   (rule 68)
+
+    STRING	shift, and go to state 38
+    STRING1	shift, and go to state 39
+    NUMBER	shift, and go to state 40
+    FLOATVAL	shift, and go to state 42
+    MONEYVAL	shift, and go to state 43
+    DATEVAL	shift, and go to state 44
+    TNULL	shift, and go to state 45
+    MINUS	shift, and go to state 185
+
+    insert_values	go to state 186
+    insert_value_neg	go to state 187
+    insert_value	go to state 188
+
+
+
+state 156
+
+    attribute_expression  ->  FUNCTION OPENPAREN attribute_expression CLOSEPAREN .   (rule 107)
+
+    $default	reduce using rule 107 (attribute_expression)
+
+
+
+state 157
+
+    select_statement  ->  SELECT select_clause FROM from_clause where_clause . ordergroup   (rule 81)
+
+    ORDER	shift, and go to state 189
+    GROUP	shift, and go to state 190
+
+    $default	reduce using rule 82 (ordergroup)
+
+    ordergroup	go to state 191
+    order_clause	go to state 192
+    group_clause	go to state 193
+
+
+
+state 158
+
+    from_clause  ->  from_item COMMA . from_clause   (rule 116)
+
+    IDENTIFIER	shift, and go to state 66
+
+    from_clause	go to state 194
+    from_item	go to state 131
+
+
+
+state 159
+
+    column_expression  ->  column_function OPENPAREN func_ident CLOSEPAREN .   (rule 91)
+
+    $default	reduce using rule 91 (column_expression)
+
+
+
+state 160
+
+    update_statement  ->  UPDATE from_item SET IDENTIFIER EQUALS . attribute_expression where_clause   (rule 148)
+
+    IDENTIFIER	shift, and go to state 37
+    STRING	shift, and go to state 38
+    STRING1	shift, and go to state 39
+    NUMBER	shift, and go to state 40
+    FUNCTION	shift, and go to state 41
+    FLOATVAL	shift, and go to state 42
+    MONEYVAL	shift, and go to state 43
+    DATEVAL	shift, and go to state 44
+    TNULL	shift, and go to state 45
+    DATE	shift, and go to state 46
+    OPENPAREN	shift, and go to state 52
+    ROWNUM	shift, and go to state 53
+    PLUS	shift, and go to state 54
+    MINUS	shift, and go to state 55
+
+    insert_value	go to state 57
+    attribute_expression	go to state 195
+    procedure	go to state 64
+    attribute	go to state 65
+
+
+
+state 161
+
+    attribute_expression  ->  OPENPAREN . attribute_expression CLOSEPAREN   (rule 110)
+    condition  ->  OPENPAREN . condition CLOSEPAREN   (rule 127)
+
+    IDENTIFIER	shift, and go to state 37
+    STRING	shift, and go to state 38
+    STRING1	shift, and go to state 39
+    NUMBER	shift, and go to state 40
+    FUNCTION	shift, and go to state 41
+    FLOATVAL	shift, and go to state 42
+    MONEYVAL	shift, and go to state 43
+    DATEVAL	shift, and go to state 44
+    TNULL	shift, and go to state 45
+    DATE	shift, and go to state 46
+    OPENPAREN	shift, and go to state 161
+    EXISTS	shift, and go to state 162
+    ROWNUM	shift, and go to state 53
+    PLUS	shift, and go to state 54
+    MINUS	shift, and go to state 55
+    NOT 	shift, and go to state 163
+
+    insert_value	go to state 57
+    attribute_expression	go to state 196
+    procedure	go to state 64
+    attribute	go to state 165
+    condition	go to state 197
+
+
+
+state 162
+
+    condition  ->  EXISTS . OPENPAREN select_statement CLOSEPAREN   (rule 136)
+
+    OPENPAREN	shift, and go to state 198
+
+
+
+state 163
+
+    condition  ->  NOT . condition   (rule 130)
+
+    IDENTIFIER	shift, and go to state 37
+    STRING	shift, and go to state 38
+    STRING1	shift, and go to state 39
+    NUMBER	shift, and go to state 40
+    FUNCTION	shift, and go to state 41
+    FLOATVAL	shift, and go to state 42
+    MONEYVAL	shift, and go to state 43
+    DATEVAL	shift, and go to state 44
+    TNULL	shift, and go to state 45
+    DATE	shift, and go to state 46
+    OPENPAREN	shift, and go to state 161
+    EXISTS	shift, and go to state 162
+    ROWNUM	shift, and go to state 53
+    PLUS	shift, and go to state 54
+    MINUS	shift, and go to state 55
+    NOT 	shift, and go to state 163
+
+    insert_value	go to state 57
+    attribute_expression	go to state 164
+    procedure	go to state 64
+    attribute	go to state 165
+    condition	go to state 199
+
+
+
+state 164
+
+    attribute_expression  ->  attribute_expression . PLUS attribute_expression   (rule 101)
+    attribute_expression  ->  attribute_expression . MINUS attribute_expression   (rule 102)
+    attribute_expression  ->  attribute_expression . SLASH attribute_expression   (rule 103)
+    attribute_expression  ->  attribute_expression . STAR attribute_expression   (rule 104)
+    condition  ->  attribute_expression . EQUALS attribute_expression   (rule 121)
+    condition  ->  attribute_expression . LESS attribute_expression   (rule 122)
+    condition  ->  attribute_expression . MORE attribute_expression   (rule 123)
+    condition  ->  attribute_expression . LEQ attribute_expression   (rule 124)
+    condition  ->  attribute_expression . MOQ attribute_expression   (rule 125)
+    condition  ->  attribute_expression . NEQ attribute_expression   (rule 126)
+    condition  ->  attribute_expression . IN OPENPAREN insert_values CLOSEPAREN   (rule 134)
+    condition  ->  attribute_expression . BETWEEN attribute_expression AND attribute_expression   (rule 135)
+    condition  ->  attribute_expression . IN OPENPAREN select_statement CLOSEPAREN   (rule 137)
+
+    IN  	shift, and go to state 200
+    LESS	shift, and go to state 201
+    MORE	shift, and go to state 202
+    LEQ 	shift, and go to state 203
+    MOQ 	shift, and go to state 204
+    NEQ 	shift, and go to state 205
+    EQUALS	shift, and go to state 206
+    BETWEEN	shift, and go to state 207
+    PLUS	shift, and go to state 102
+    MINUS	shift, and go to state 103
+    STAR	shift, and go to state 104
+    SLASH	shift, and go to state 105
+
+
+
+state 165
+
+    attribute_expression  ->  attribute .   (rule 100)
+    condition  ->  attribute . IS TNULL   (rule 131)
+    condition  ->  attribute . IS NOT TNULL   (rule 132)
+    condition  ->  attribute . LIKE STRING   (rule 133)
+
+    IS  	shift, and go to state 208
+    LIKE	shift, and go to state 209
+
+    $default	reduce using rule 100 (attribute_expression)
+
+
+
+state 166
+
+    where_clause  ->  WHERE condition .   (rule 120)
+    condition  ->  condition . AND condition   (rule 128)
+    condition  ->  condition . OR condition   (rule 129)
+
+    OR  	shift, and go to state 210
+    AND 	shift, and go to state 211
+
+    $default	reduce using rule 120 (where_clause)
+
+
+
+state 167
+
+    ident_list  ->  IDENTIFIER COMMA . ident_list   (rule 47)
+
+    IDENTIFIER	shift, and go to state 146
+
+    ident_list	go to state 212
+
+
+
+state 168
+
+    tofrom  ->  FROM .   (rule 155)
+
+    $default	reduce using rule 155 (tofrom)
+
+
+
+state 169
+
+    tofrom  ->  TO .   (rule 154)
+
+    $default	reduce using rule 154 (tofrom)
+
+
+
+state 170
+
+    grant_revoke_body  ->  gritems ON ident_list tofrom . grantwho with_grant   (rule 151)
+
+    IDENTIFIER	shift, and go to state 146
+    ALL 	shift, and go to state 213
+
+    ident_list	go to state 214
+    grantwho	go to state 215
+
+
+
+state 171
+
+    attrtype  ->  INTEGER .   (rule 52)
+
+    $default	reduce using rule 52 (attrtype)
+
+
+
+state 172
+
+    attrtype  ->  VARCHAR . OPENPAREN NUMBER CLOSEPAREN   (rule 53)
+
+    OPENPAREN	shift, and go to state 216
+
+
+
+state 173
+
+    attrtype  ->  DATE .   (rule 54)
+
+    $default	reduce using rule 54 (attrtype)
+
+
+
+state 174
+
+    attrtype  ->  MONEY .   (rule 55)
+
+    $default	reduce using rule 55 (attrtype)
+
+
+
+state 175
+
+    attrtype  ->  FLOAT .   (rule 56)
+
+    $default	reduce using rule 56 (attrtype)
+
+
+
+state 176
+
+    attrtype  ->  CHAR .   (rule 57)
+
+    $default	reduce using rule 57 (attrtype)
+
+
+
+state 177
+
+    table_def_entry  ->  IDENTIFIER attrtype . nullspec   (rule 50)
+    table_def_entry  ->  IDENTIFIER attrtype .   (rule 51)
+
+    TNULL	shift, and go to state 217
+    NOT 	shift, and go to state 218
+
+    $default	reduce using rule 51 (table_def_entry)
+
+    nullspec	go to state 219
+
+
+
+state 178
+
+    primary_clause  ->  PRIMARY . KEY OPENPAREN ident_list CLOSEPAREN   (rule 37)
+
+    KEY 	shift, and go to state 220
+
+
+
+state 179
+
+    foreign_key  ->  FOREIGN . KEY OPENPAREN ident_list CLOSEPAREN REFERENCES IDENTIFIER foreign_rules   (rule 40)
+
+    KEY 	shift, and go to state 221
+
+
+
+state 180
+
+    create_table  ->  IDENTIFIER OPENPAREN table_def key_clause . CLOSEPAREN   (rule 32)
+
+    CLOSEPAREN	shift, and go to state 222
+
+
+
+state 181
+
+    key_clause  ->  primary_clause .   (rule 33)
+    key_clause  ->  primary_clause . foreign_clause   (rule 35)
+
+    FOREIGN	shift, and go to state 179
+
+    $default	reduce using rule 33 (key_clause)
+
+    foreign_clause	go to state 223
+    foreign_key	go to state 183
+
+
+
+state 182
+
+    key_clause  ->  foreign_clause .   (rule 34)
+
+    $default	reduce using rule 34 (key_clause)
+
+
+
+state 183
+
+    foreign_clause  ->  foreign_key .   (rule 38)
+    foreign_clause  ->  foreign_key . foreign_clause   (rule 39)
+
+    FOREIGN	shift, and go to state 179
+
+    $default	reduce using rule 38 (foreign_clause)
+
+    foreign_clause	go to state 224
+    foreign_key	go to state 183
+
+
+
+state 184
+
+    table_def  ->  table_def_entry COMMA . table_def   (rule 49)
+
+    IDENTIFIER	shift, and go to state 152
+
+    table_def	go to state 225
+    table_def_entry	go to state 154
+
+
+
+state 185
+
+    insert_value_neg  ->  MINUS . NUMBER   (rule 72)
+    insert_value_neg  ->  MINUS . FLOATVAL   (rule 73)
+
+    NUMBER	shift, and go to state 226
+    FLOATVAL	shift, and go to state 227
+
+
+
+state 186
+
+    insert_statement  ->  INSERT INTO IDENTIFIER VALUES OPENPAREN insert_values . CLOSEPAREN   (rule 68)
+
+    CLOSEPAREN	shift, and go to state 228
+
+
+
+state 187
+
+    insert_values  ->  insert_value_neg .   (rule 69)
+    insert_values  ->  insert_value_neg . COMMA insert_values   (rule 70)
+
+    COMMA	shift, and go to state 229
+
+    $default	reduce using rule 69 (insert_values)
+
+
+
+state 188
+
+    insert_value_neg  ->  insert_value .   (rule 71)
+
+    $default	reduce using rule 71 (insert_value_neg)
+
+
+
+state 189
+
+    order_clause  ->  ORDER . BY attributeorder_list   (rule 138)
+
+    BY  	shift, and go to state 230
+
+
+
+state 190
+
+    group_clause  ->  GROUP . BY attributeexp_list   (rule 139)
+
+    BY  	shift, and go to state 231
+
+
+
+state 191
+
+    select_statement  ->  SELECT select_clause FROM from_clause where_clause ordergroup .   (rule 81)
+
+    $default	reduce using rule 81 (select_statement)
+
+
+
+state 192
+
+    ordergroup  ->  order_clause .   (rule 83)
+
+    $default	reduce using rule 83 (ordergroup)
+
+
+
+state 193
+
+    ordergroup  ->  group_clause .   (rule 84)
+
+    $default	reduce using rule 84 (ordergroup)
+
+
+
+state 194
+
+    from_clause  ->  from_item COMMA from_clause .   (rule 116)
+
+    $default	reduce using rule 116 (from_clause)
+
+
+
+state 195
+
+    attribute_expression  ->  attribute_expression . PLUS attribute_expression   (rule 101)
+    attribute_expression  ->  attribute_expression . MINUS attribute_expression   (rule 102)
+    attribute_expression  ->  attribute_expression . SLASH attribute_expression   (rule 103)
+    attribute_expression  ->  attribute_expression . STAR attribute_expression   (rule 104)
+    update_statement  ->  UPDATE from_item SET IDENTIFIER EQUALS attribute_expression . where_clause   (rule 148)
+
+    WHERE	shift, and go to state 143
+    PLUS	shift, and go to state 102
+    MINUS	shift, and go to state 103
+    STAR	shift, and go to state 104
+    SLASH	shift, and go to state 105
+
+    $default	reduce using rule 119 (where_clause)
+
+    where_clause	go to state 232
+
+
+
+state 196
+
+    attribute_expression  ->  attribute_expression . PLUS attribute_expression   (rule 101)
+    attribute_expression  ->  attribute_expression . MINUS attribute_expression   (rule 102)
+    attribute_expression  ->  attribute_expression . SLASH attribute_expression   (rule 103)
+    attribute_expression  ->  attribute_expression . STAR attribute_expression   (rule 104)
+    attribute_expression  ->  OPENPAREN attribute_expression . CLOSEPAREN   (rule 110)
+    condition  ->  attribute_expression . EQUALS attribute_expression   (rule 121)
+    condition  ->  attribute_expression . LESS attribute_expression   (rule 122)
+    condition  ->  attribute_expression . MORE attribute_expression   (rule 123)
+    condition  ->  attribute_expression . LEQ attribute_expression   (rule 124)
+    condition  ->  attribute_expression . MOQ attribute_expression   (rule 125)
+    condition  ->  attribute_expression . NEQ attribute_expression   (rule 126)
+    condition  ->  attribute_expression . IN OPENPAREN insert_values CLOSEPAREN   (rule 134)
+    condition  ->  attribute_expression . BETWEEN attribute_expression AND attribute_expression   (rule 135)
+    condition  ->  attribute_expression . IN OPENPAREN select_statement CLOSEPAREN   (rule 137)
+
+    IN  	shift, and go to state 200
+    LESS	shift, and go to state 201
+    MORE	shift, and go to state 202
+    LEQ 	shift, and go to state 203
+    MOQ 	shift, and go to state 204
+    NEQ 	shift, and go to state 205
+    CLOSEPAREN	shift, and go to state 129
+    EQUALS	shift, and go to state 206
+    BETWEEN	shift, and go to state 207
+    PLUS	shift, and go to state 102
+    MINUS	shift, and go to state 103
+    STAR	shift, and go to state 104
+    SLASH	shift, and go to state 105
+
+
+
+state 197
+
+    condition  ->  OPENPAREN condition . CLOSEPAREN   (rule 127)
+    condition  ->  condition . AND condition   (rule 128)
+    condition  ->  condition . OR condition   (rule 129)
+
+    CLOSEPAREN	shift, and go to state 233
+    OR  	shift, and go to state 210
+    AND 	shift, and go to state 211
+
+
+
+state 198
+
+    condition  ->  EXISTS OPENPAREN . select_statement CLOSEPAREN   (rule 136)
+
+    SELECT	shift, and go to state 9
+
+    select_statement	go to state 234
+
+
+
+state 199
+
+    condition  ->  condition . AND condition   (rule 128)
+    condition  ->  condition . OR condition   (rule 129)
+    condition  ->  NOT condition .   (rule 130)
+
+
+    $default	reduce using rule 130 (condition)
+
+
+
+state 200
+
+    condition  ->  attribute_expression IN . OPENPAREN insert_values CLOSEPAREN   (rule 134)
+    condition  ->  attribute_expression IN . OPENPAREN select_statement CLOSEPAREN   (rule 137)
+
+    OPENPAREN	shift, and go to state 235
+
+
+
+state 201
+
+    condition  ->  attribute_expression LESS . attribute_expression   (rule 122)
+
+    IDENTIFIER	shift, and go to state 37
+    STRING	shift, and go to state 38
+    STRING1	shift, and go to state 39
+    NUMBER	shift, and go to state 40
+    FUNCTION	shift, and go to state 41
+    FLOATVAL	shift, and go to state 42
+    MONEYVAL	shift, and go to state 43
+    DATEVAL	shift, and go to state 44
+    TNULL	shift, and go to state 45
+    DATE	shift, and go to state 46
+    OPENPAREN	shift, and go to state 52
+    ROWNUM	shift, and go to state 53
+    PLUS	shift, and go to state 54
+    MINUS	shift, and go to state 55
+
+    insert_value	go to state 57
+    attribute_expression	go to state 236
+    procedure	go to state 64
+    attribute	go to state 65
+
+
+
+state 202
+
+    condition  ->  attribute_expression MORE . attribute_expression   (rule 123)
+
+    IDENTIFIER	shift, and go to state 37
+    STRING	shift, and go to state 38
+    STRING1	shift, and go to state 39
+    NUMBER	shift, and go to state 40
+    FUNCTION	shift, and go to state 41
+    FLOATVAL	shift, and go to state 42
+    MONEYVAL	shift, and go to state 43
+    DATEVAL	shift, and go to state 44
+    TNULL	shift, and go to state 45
+    DATE	shift, and go to state 46
+    OPENPAREN	shift, and go to state 52
+    ROWNUM	shift, and go to state 53
+    PLUS	shift, and go to state 54
+    MINUS	shift, and go to state 55
+
+    insert_value	go to state 57
+    attribute_expression	go to state 237
+    procedure	go to state 64
+    attribute	go to state 65
+
+
+
+state 203
+
+    condition  ->  attribute_expression LEQ . attribute_expression   (rule 124)
+
+    IDENTIFIER	shift, and go to state 37
+    STRING	shift, and go to state 38
+    STRING1	shift, and go to state 39
+    NUMBER	shift, and go to state 40
+    FUNCTION	shift, and go to state 41
+    FLOATVAL	shift, and go to state 42
+    MONEYVAL	shift, and go to state 43
+    DATEVAL	shift, and go to state 44
+    TNULL	shift, and go to state 45
+    DATE	shift, and go to state 46
+    OPENPAREN	shift, and go to state 52
+    ROWNUM	shift, and go to state 53
+    PLUS	shift, and go to state 54
+    MINUS	shift, and go to state 55
+
+    insert_value	go to state 57
+    attribute_expression	go to state 238
+    procedure	go to state 64
+    attribute	go to state 65
+
+
+
+state 204
+
+    condition  ->  attribute_expression MOQ . attribute_expression   (rule 125)
+
+    IDENTIFIER	shift, and go to state 37
+    STRING	shift, and go to state 38
+    STRING1	shift, and go to state 39
+    NUMBER	shift, and go to state 40
+    FUNCTION	shift, and go to state 41
+    FLOATVAL	shift, and go to state 42
+    MONEYVAL	shift, and go to state 43
+    DATEVAL	shift, and go to state 44
+    TNULL	shift, and go to state 45
+    DATE	shift, and go to state 46
+    OPENPAREN	shift, and go to state 52
+    ROWNUM	shift, and go to state 53
+    PLUS	shift, and go to state 54
+    MINUS	shift, and go to state 55
+
+    insert_value	go to state 57
+    attribute_expression	go to state 239
+    procedure	go to state 64
+    attribute	go to state 65
+
+
+
+state 205
+
+    condition  ->  attribute_expression NEQ . attribute_expression   (rule 126)
+
+    IDENTIFIER	shift, and go to state 37
+    STRING	shift, and go to state 38
+    STRING1	shift, and go to state 39
+    NUMBER	shift, and go to state 40
+    FUNCTION	shift, and go to state 41
+    FLOATVAL	shift, and go to state 42
+    MONEYVAL	shift, and go to state 43
+    DATEVAL	shift, and go to state 44
+    TNULL	shift, and go to state 45
+    DATE	shift, and go to state 46
+    OPENPAREN	shift, and go to state 52
+    ROWNUM	shift, and go to state 53
+    PLUS	shift, and go to state 54
+    MINUS	shift, and go to state 55
+
+    insert_value	go to state 57
+    attribute_expression	go to state 240
+    procedure	go to state 64
+    attribute	go to state 65
+
+
+
+state 206
+
+    condition  ->  attribute_expression EQUALS . attribute_expression   (rule 121)
+
+    IDENTIFIER	shift, and go to state 37
+    STRING	shift, and go to state 38
+    STRING1	shift, and go to state 39
+    NUMBER	shift, and go to state 40
+    FUNCTION	shift, and go to state 41
+    FLOATVAL	shift, and go to state 42
+    MONEYVAL	shift, and go to state 43
+    DATEVAL	shift, and go to state 44
+    TNULL	shift, and go to state 45
+    DATE	shift, and go to state 46
+    OPENPAREN	shift, and go to state 52
+    ROWNUM	shift, and go to state 53
+    PLUS	shift, and go to state 54
+    MINUS	shift, and go to state 55
+
+    insert_value	go to state 57
+    attribute_expression	go to state 241
+    procedure	go to state 64
+    attribute	go to state 65
+
+
+
+state 207
+
+    condition  ->  attribute_expression BETWEEN . attribute_expression AND attribute_expression   (rule 135)
+
+    IDENTIFIER	shift, and go to state 37
+    STRING	shift, and go to state 38
+    STRING1	shift, and go to state 39
+    NUMBER	shift, and go to state 40
+    FUNCTION	shift, and go to state 41
+    FLOATVAL	shift, and go to state 42
+    MONEYVAL	shift, and go to state 43
+    DATEVAL	shift, and go to state 44
+    TNULL	shift, and go to state 45
+    DATE	shift, and go to state 46
+    OPENPAREN	shift, and go to state 52
+    ROWNUM	shift, and go to state 53
+    PLUS	shift, and go to state 54
+    MINUS	shift, and go to state 55
+
+    insert_value	go to state 57
+    attribute_expression	go to state 242
+    procedure	go to state 64
+    attribute	go to state 65
+
+
+
+state 208
+
+    condition  ->  attribute IS . TNULL   (rule 131)
+    condition  ->  attribute IS . NOT TNULL   (rule 132)
+
+    TNULL	shift, and go to state 243
+    NOT 	shift, and go to state 244
+
+
+
+state 209
+
+    condition  ->  attribute LIKE . STRING   (rule 133)
+
+    STRING	shift, and go to state 245
+
+
+
+state 210
+
+    condition  ->  condition OR . condition   (rule 129)
+
+    IDENTIFIER	shift, and go to state 37
+    STRING	shift, and go to state 38
+    STRING1	shift, and go to state 39
+    NUMBER	shift, and go to state 40
+    FUNCTION	shift, and go to state 41
+    FLOATVAL	shift, and go to state 42
+    MONEYVAL	shift, and go to state 43
+    DATEVAL	shift, and go to state 44
+    TNULL	shift, and go to state 45
+    DATE	shift, and go to state 46
+    OPENPAREN	shift, and go to state 161
+    EXISTS	shift, and go to state 162
+    ROWNUM	shift, and go to state 53
+    PLUS	shift, and go to state 54
+    MINUS	shift, and go to state 55
+    NOT 	shift, and go to state 163
+
+    insert_value	go to state 57
+    attribute_expression	go to state 164
+    procedure	go to state 64
+    attribute	go to state 165
+    condition	go to state 246
+
+
+
+state 211
+
+    condition  ->  condition AND . condition   (rule 128)
+
+    IDENTIFIER	shift, and go to state 37
+    STRING	shift, and go to state 38
+    STRING1	shift, and go to state 39
+    NUMBER	shift, and go to state 40
+    FUNCTION	shift, and go to state 41
+    FLOATVAL	shift, and go to state 42
+    MONEYVAL	shift, and go to state 43
+    DATEVAL	shift, and go to state 44
+    TNULL	shift, and go to state 45
+    DATE	shift, and go to state 46
+    OPENPAREN	shift, and go to state 161
+    EXISTS	shift, and go to state 162
+    ROWNUM	shift, and go to state 53
+    PLUS	shift, and go to state 54
+    MINUS	shift, and go to state 55
+    NOT 	shift, and go to state 163
+
+    insert_value	go to state 57
+    attribute_expression	go to state 164
+    procedure	go to state 64
+    attribute	go to state 165
+    condition	go to state 247
+
+
+
+state 212
+
+    ident_list  ->  IDENTIFIER COMMA ident_list .   (rule 47)
+
+    $default	reduce using rule 47 (ident_list)
+
+
+
+state 213
+
+    grantwho  ->  ALL .   (rule 152)
+
+    $default	reduce using rule 152 (grantwho)
+
+
+
+state 214
+
+    grantwho  ->  ident_list .   (rule 153)
+
+    $default	reduce using rule 153 (grantwho)
+
+
+
+state 215
+
+    grant_revoke_body  ->  gritems ON ident_list tofrom grantwho . with_grant   (rule 151)
+
+    WITH	shift, and go to state 248
+
+    $default	reduce using rule 165 (with_grant)
+
+    with_grant	go to state 249
+
+
+
+state 216
+
+    attrtype  ->  VARCHAR OPENPAREN . NUMBER CLOSEPAREN   (rule 53)
+
+    NUMBER	shift, and go to state 250
+
+
+
+state 217
+
+    nullspec  ->  TNULL .   (rule 58)
+
+    $default	reduce using rule 58 (nullspec)
+
+
+
+state 218
+
+    nullspec  ->  NOT . TNULL   (rule 59)
+
+    TNULL	shift, and go to state 251
+
+
+
+state 219
+
+    table_def_entry  ->  IDENTIFIER attrtype nullspec .   (rule 50)
+
+    $default	reduce using rule 50 (table_def_entry)
+
+
+
+state 220
+
+    primary_clause  ->  PRIMARY KEY . OPENPAREN ident_list CLOSEPAREN   (rule 37)
+
+    OPENPAREN	shift, and go to state 252
+
+
+
+state 221
+
+    foreign_key  ->  FOREIGN KEY . OPENPAREN ident_list CLOSEPAREN REFERENCES IDENTIFIER foreign_rules   (rule 40)
+
+    OPENPAREN	shift, and go to state 253
+
+
+
+state 222
+
+    create_table  ->  IDENTIFIER OPENPAREN table_def key_clause CLOSEPAREN .   (rule 32)
+
+    $default	reduce using rule 32 (create_table)
+
+
+
+state 223
+
+    key_clause  ->  primary_clause foreign_clause .   (rule 35)
+
+    $default	reduce using rule 35 (key_clause)
+
+
+
+state 224
+
+    foreign_clause  ->  foreign_key foreign_clause .   (rule 39)
+
+    $default	reduce using rule 39 (foreign_clause)
+
+
+
+state 225
+
+    table_def  ->  table_def_entry COMMA table_def .   (rule 49)
+
+    $default	reduce using rule 49 (table_def)
+
+
+
+state 226
+
+    insert_value_neg  ->  MINUS NUMBER .   (rule 72)
+
+    $default	reduce using rule 72 (insert_value_neg)
+
+
+
+state 227
+
+    insert_value_neg  ->  MINUS FLOATVAL .   (rule 73)
+
+    $default	reduce using rule 73 (insert_value_neg)
+
+
+
+state 228
+
+    insert_statement  ->  INSERT INTO IDENTIFIER VALUES OPENPAREN insert_values CLOSEPAREN .   (rule 68)
+
+    $default	reduce using rule 68 (insert_statement)
+
+
+
+state 229
+
+    insert_values  ->  insert_value_neg COMMA . insert_values   (rule 70)
+
+    STRING	shift, and go to state 38
+    STRING1	shift, and go to state 39
+    NUMBER	shift, and go to state 40
+    FLOATVAL	shift, and go to state 42
+    MONEYVAL	shift, and go to state 43
+    DATEVAL	shift, and go to state 44
+    TNULL	shift, and go to state 45
+    MINUS	shift, and go to state 185
+
+    insert_values	go to state 254
+    insert_value_neg	go to state 187
+    insert_value	go to state 188
+
+
+
+state 230
+
+    order_clause  ->  ORDER BY . attributeorder_list   (rule 138)
+
+    IDENTIFIER	shift, and go to state 37
+    STRING	shift, and go to state 38
+    STRING1	shift, and go to state 39
+    NUMBER	shift, and go to state 40
+    FUNCTION	shift, and go to state 41
+    FLOATVAL	shift, and go to state 42
+    MONEYVAL	shift, and go to state 43
+    DATEVAL	shift, and go to state 44
+    TNULL	shift, and go to state 45
+    DATE	shift, and go to state 46
+    OPENPAREN	shift, and go to state 52
+    ASCENDING	shift, and go to state 255
+    DESCENDING	shift, and go to state 256
+    ROWNUM	shift, and go to state 53
+    PLUS	shift, and go to state 54
+    MINUS	shift, and go to state 55
+
+    insert_value	go to state 57
+    attribute_expression	go to state 257
+    procedure	go to state 64
+    attribute	go to state 65
+    attributeorder_list	go to state 258
+    attributeorder_exp	go to state 259
+
+
+
+state 231
+
+    group_clause  ->  GROUP BY . attributeexp_list   (rule 139)
+
+    IDENTIFIER	shift, and go to state 37
+    STRING	shift, and go to state 38
+    STRING1	shift, and go to state 39
+    NUMBER	shift, and go to state 40
+    FUNCTION	shift, and go to state 41
+    FLOATVAL	shift, and go to state 42
+    MONEYVAL	shift, and go to state 43
+    DATEVAL	shift, and go to state 44
+    TNULL	shift, and go to state 45
+    DATE	shift, and go to state 46
+    OPENPAREN	shift, and go to state 52
+    ROWNUM	shift, and go to state 53
+    PLUS	shift, and go to state 54
+    MINUS	shift, and go to state 55
+
+    insert_value	go to state 57
+    attribute_expression	go to state 260
+    procedure	go to state 64
+    attribute	go to state 65
+    attributeexp_list	go to state 261
+
+
+
+state 232
+
+    update_statement  ->  UPDATE from_item SET IDENTIFIER EQUALS attribute_expression where_clause .   (rule 148)
+
+    $default	reduce using rule 148 (update_statement)
+
+
+
+state 233
+
+    condition  ->  OPENPAREN condition CLOSEPAREN .   (rule 127)
+
+    $default	reduce using rule 127 (condition)
+
+
+
+state 234
+
+    condition  ->  EXISTS OPENPAREN select_statement . CLOSEPAREN   (rule 136)
+
+    CLOSEPAREN	shift, and go to state 262
+
+
+
+state 235
+
+    condition  ->  attribute_expression IN OPENPAREN . insert_values CLOSEPAREN   (rule 134)
+    condition  ->  attribute_expression IN OPENPAREN . select_statement CLOSEPAREN   (rule 137)
+
+    STRING	shift, and go to state 38
+    STRING1	shift, and go to state 39
+    NUMBER	shift, and go to state 40
+    FLOATVAL	shift, and go to state 42
+    MONEYVAL	shift, and go to state 43
+    DATEVAL	shift, and go to state 44
+    TNULL	shift, and go to state 45
+    SELECT	shift, and go to state 9
+    MINUS	shift, and go to state 185
+
+    insert_values	go to state 263
+    insert_value_neg	go to state 187
+    insert_value	go to state 188
+    select_statement	go to state 264
+
+
+
+state 236
+
+    attribute_expression  ->  attribute_expression . PLUS attribute_expression   (rule 101)
+    attribute_expression  ->  attribute_expression . MINUS attribute_expression   (rule 102)
+    attribute_expression  ->  attribute_expression . SLASH attribute_expression   (rule 103)
+    attribute_expression  ->  attribute_expression . STAR attribute_expression   (rule 104)
+    condition  ->  attribute_expression LESS attribute_expression .   (rule 122)
+
+    PLUS	shift, and go to state 102
+    MINUS	shift, and go to state 103
+    STAR	shift, and go to state 104
+    SLASH	shift, and go to state 105
+
+    $default	reduce using rule 122 (condition)
+
+
+
+state 237
+
+    attribute_expression  ->  attribute_expression . PLUS attribute_expression   (rule 101)
+    attribute_expression  ->  attribute_expression . MINUS attribute_expression   (rule 102)
+    attribute_expression  ->  attribute_expression . SLASH attribute_expression   (rule 103)
+    attribute_expression  ->  attribute_expression . STAR attribute_expression   (rule 104)
+    condition  ->  attribute_expression MORE attribute_expression .   (rule 123)
+
+    PLUS	shift, and go to state 102
+    MINUS	shift, and go to state 103
+    STAR	shift, and go to state 104
+    SLASH	shift, and go to state 105
+
+    $default	reduce using rule 123 (condition)
+
+
+
+state 238
+
+    attribute_expression  ->  attribute_expression . PLUS attribute_expression   (rule 101)
+    attribute_expression  ->  attribute_expression . MINUS attribute_expression   (rule 102)
+    attribute_expression  ->  attribute_expression . SLASH attribute_expression   (rule 103)
+    attribute_expression  ->  attribute_expression . STAR attribute_expression   (rule 104)
+    condition  ->  attribute_expression LEQ attribute_expression .   (rule 124)
+
+    PLUS	shift, and go to state 102
+    MINUS	shift, and go to state 103
+    STAR	shift, and go to state 104
+    SLASH	shift, and go to state 105
+
+    $default	reduce using rule 124 (condition)
+
+
+
+state 239
+
+    attribute_expression  ->  attribute_expression . PLUS attribute_expression   (rule 101)
+    attribute_expression  ->  attribute_expression . MINUS attribute_expression   (rule 102)
+    attribute_expression  ->  attribute_expression . SLASH attribute_expression   (rule 103)
+    attribute_expression  ->  attribute_expression . STAR attribute_expression   (rule 104)
+    condition  ->  attribute_expression MOQ attribute_expression .   (rule 125)
+
+    PLUS	shift, and go to state 102
+    MINUS	shift, and go to state 103
+    STAR	shift, and go to state 104
+    SLASH	shift, and go to state 105
+
+    $default	reduce using rule 125 (condition)
+
+
+
+state 240
+
+    attribute_expression  ->  attribute_expression . PLUS attribute_expression   (rule 101)
+    attribute_expression  ->  attribute_expression . MINUS attribute_expression   (rule 102)
+    attribute_expression  ->  attribute_expression . SLASH attribute_expression   (rule 103)
+    attribute_expression  ->  attribute_expression . STAR attribute_expression   (rule 104)
+    condition  ->  attribute_expression NEQ attribute_expression .   (rule 126)
+
+    PLUS	shift, and go to state 102
+    MINUS	shift, and go to state 103
+    STAR	shift, and go to state 104
+    SLASH	shift, and go to state 105
+
+    $default	reduce using rule 126 (condition)
+
+
+
+state 241
+
+    attribute_expression  ->  attribute_expression . PLUS attribute_expression   (rule 101)
+    attribute_expression  ->  attribute_expression . MINUS attribute_expression   (rule 102)
+    attribute_expression  ->  attribute_expression . SLASH attribute_expression   (rule 103)
+    attribute_expression  ->  attribute_expression . STAR attribute_expression   (rule 104)
+    condition  ->  attribute_expression EQUALS attribute_expression .   (rule 121)
+
+    PLUS	shift, and go to state 102
+    MINUS	shift, and go to state 103
+    STAR	shift, and go to state 104
+    SLASH	shift, and go to state 105
+
+    $default	reduce using rule 121 (condition)
+
+
+
+state 242
+
+    attribute_expression  ->  attribute_expression . PLUS attribute_expression   (rule 101)
+    attribute_expression  ->  attribute_expression . MINUS attribute_expression   (rule 102)
+    attribute_expression  ->  attribute_expression . SLASH attribute_expression   (rule 103)
+    attribute_expression  ->  attribute_expression . STAR attribute_expression   (rule 104)
+    condition  ->  attribute_expression BETWEEN attribute_expression . AND attribute_expression   (rule 135)
+
+    PLUS	shift, and go to state 102
+    MINUS	shift, and go to state 103
+    STAR	shift, and go to state 104
+    SLASH	shift, and go to state 105
+    AND 	shift, and go to state 265
+
+
+
+state 243
+
+    condition  ->  attribute IS TNULL .   (rule 131)
+
+    $default	reduce using rule 131 (condition)
+
+
+
+state 244
+
+    condition  ->  attribute IS NOT . TNULL   (rule 132)
+
+    TNULL	shift, and go to state 266
+
+
+
+state 245
+
+    condition  ->  attribute LIKE STRING .   (rule 133)
+
+    $default	reduce using rule 133 (condition)
+
+
+
+state 246
+
+    condition  ->  condition . AND condition   (rule 128)
+    condition  ->  condition . OR condition   (rule 129)
+    condition  ->  condition OR condition .   (rule 129)
+
+    AND 	shift, and go to state 211
+
+    $default	reduce using rule 129 (condition)
+
+
+
+state 247
+
+    condition  ->  condition . AND condition   (rule 128)
+    condition  ->  condition AND condition .   (rule 128)
+    condition  ->  condition . OR condition   (rule 129)
+
+
+    $default	reduce using rule 128 (condition)
+
+
+
+state 248
+
+    with_grant  ->  WITH . GRANT OPTION   (rule 166)
+
+    GRANT	shift, and go to state 267
+
+
+
+state 249
+
+    grant_revoke_body  ->  gritems ON ident_list tofrom grantwho with_grant .   (rule 151)
+
+    $default	reduce using rule 151 (grant_revoke_body)
+
+
+
+state 250
+
+    attrtype  ->  VARCHAR OPENPAREN NUMBER . CLOSEPAREN   (rule 53)
+
+    CLOSEPAREN	shift, and go to state 268
+
+
+
+state 251
+
+    nullspec  ->  NOT TNULL .   (rule 59)
+
+    $default	reduce using rule 59 (nullspec)
+
+
+
+state 252
+
+    primary_clause  ->  PRIMARY KEY OPENPAREN . ident_list CLOSEPAREN   (rule 37)
+
+    IDENTIFIER	shift, and go to state 146
+
+    ident_list	go to state 269
+
+
+
+state 253
+
+    foreign_key  ->  FOREIGN KEY OPENPAREN . ident_list CLOSEPAREN REFERENCES IDENTIFIER foreign_rules   (rule 40)
+
+    IDENTIFIER	shift, and go to state 146
+
+    ident_list	go to state 270
+
+
+
+state 254
+
+    insert_values  ->  insert_value_neg COMMA insert_values .   (rule 70)
+
+    $default	reduce using rule 70 (insert_values)
+
+
+
+state 255
+
+    attributeorder_exp  ->  ASCENDING . attribute_expression   (rule 143)
+
+    IDENTIFIER	shift, and go to state 37
+    STRING	shift, and go to state 38
+    STRING1	shift, and go to state 39
+    NUMBER	shift, and go to state 40
+    FUNCTION	shift, and go to state 41
+    FLOATVAL	shift, and go to state 42
+    MONEYVAL	shift, and go to state 43
+    DATEVAL	shift, and go to state 44
+    TNULL	shift, and go to state 45
+    DATE	shift, and go to state 46
+    OPENPAREN	shift, and go to state 52
+    ROWNUM	shift, and go to state 53
+    PLUS	shift, and go to state 54
+    MINUS	shift, and go to state 55
+
+    insert_value	go to state 57
+    attribute_expression	go to state 271
+    procedure	go to state 64
+    attribute	go to state 65
+
+
+
+state 256
+
+    attributeorder_exp  ->  DESCENDING . attribute_expression   (rule 144)
+
+    IDENTIFIER	shift, and go to state 37
+    STRING	shift, and go to state 38
+    STRING1	shift, and go to state 39
+    NUMBER	shift, and go to state 40
+    FUNCTION	shift, and go to state 41
+    FLOATVAL	shift, and go to state 42
+    MONEYVAL	shift, and go to state 43
+    DATEVAL	shift, and go to state 44
+    TNULL	shift, and go to state 45
+    DATE	shift, and go to state 46
+    OPENPAREN	shift, and go to state 52
+    ROWNUM	shift, and go to state 53
+    PLUS	shift, and go to state 54
+    MINUS	shift, and go to state 55
+
+    insert_value	go to state 57
+    attribute_expression	go to state 272
+    procedure	go to state 64
+    attribute	go to state 65
+
+
+
+state 257
+
+    attribute_expression  ->  attribute_expression . PLUS attribute_expression   (rule 101)
+    attribute_expression  ->  attribute_expression . MINUS attribute_expression   (rule 102)
+    attribute_expression  ->  attribute_expression . SLASH attribute_expression   (rule 103)
+    attribute_expression  ->  attribute_expression . STAR attribute_expression   (rule 104)
+    attributeorder_exp  ->  attribute_expression .   (rule 142)
+
+    PLUS	shift, and go to state 102
+    MINUS	shift, and go to state 103
+    STAR	shift, and go to state 104
+    SLASH	shift, and go to state 105
+
+    $default	reduce using rule 142 (attributeorder_exp)
+
+
+
+state 258
+
+    order_clause  ->  ORDER BY attributeorder_list .   (rule 138)
+
+    $default	reduce using rule 138 (order_clause)
+
+
+
+state 259
+
+    attributeorder_list  ->  attributeorder_exp .   (rule 140)
+    attributeorder_list  ->  attributeorder_exp . COMMA attributeorder_list   (rule 141)
+
+    COMMA	shift, and go to state 273
+
+    $default	reduce using rule 140 (attributeorder_list)
+
+
+
+state 260
+
+    attribute_expression  ->  attribute_expression . PLUS attribute_expression   (rule 101)
+    attribute_expression  ->  attribute_expression . MINUS attribute_expression   (rule 102)
+    attribute_expression  ->  attribute_expression . SLASH attribute_expression   (rule 103)
+    attribute_expression  ->  attribute_expression . STAR attribute_expression   (rule 104)
+    attributeexp_list  ->  attribute_expression .   (rule 145)
+    attributeexp_list  ->  attribute_expression . COMMA attributeexp_list   (rule 146)
+
+    COMMA	shift, and go to state 274
+    PLUS	shift, and go to state 102
+    MINUS	shift, and go to state 103
+    STAR	shift, and go to state 104
+    SLASH	shift, and go to state 105
+
+    $default	reduce using rule 145 (attributeexp_list)
+
+
+
+state 261
+
+    group_clause  ->  GROUP BY attributeexp_list .   (rule 139)
+
+    $default	reduce using rule 139 (group_clause)
+
+
+
+state 262
+
+    condition  ->  EXISTS OPENPAREN select_statement CLOSEPAREN .   (rule 136)
+
+    $default	reduce using rule 136 (condition)
+
+
+
+state 263
+
+    condition  ->  attribute_expression IN OPENPAREN insert_values . CLOSEPAREN   (rule 134)
+
+    CLOSEPAREN	shift, and go to state 275
+
+
+
+state 264
+
+    condition  ->  attribute_expression IN OPENPAREN select_statement . CLOSEPAREN   (rule 137)
+
+    CLOSEPAREN	shift, and go to state 276
+
+
+
+state 265
+
+    condition  ->  attribute_expression BETWEEN attribute_expression AND . attribute_expression   (rule 135)
+
+    IDENTIFIER	shift, and go to state 37
+    STRING	shift, and go to state 38
+    STRING1	shift, and go to state 39
+    NUMBER	shift, and go to state 40
+    FUNCTION	shift, and go to state 41
+    FLOATVAL	shift, and go to state 42
+    MONEYVAL	shift, and go to state 43
+    DATEVAL	shift, and go to state 44
+    TNULL	shift, and go to state 45
+    DATE	shift, and go to state 46
+    OPENPAREN	shift, and go to state 52
+    ROWNUM	shift, and go to state 53
+    PLUS	shift, and go to state 54
+    MINUS	shift, and go to state 55
+
+    insert_value	go to state 57
+    attribute_expression	go to state 277
+    procedure	go to state 64
+    attribute	go to state 65
+
+
+
+state 266
+
+    condition  ->  attribute IS NOT TNULL .   (rule 132)
+
+    $default	reduce using rule 132 (condition)
+
+
+
+state 267
+
+    with_grant  ->  WITH GRANT . OPTION   (rule 166)
+
+    OPTION	shift, and go to state 278
+
+
+
+state 268
+
+    attrtype  ->  VARCHAR OPENPAREN NUMBER CLOSEPAREN .   (rule 53)
+
+    $default	reduce using rule 53 (attrtype)
+
+
+
+state 269
+
+    primary_clause  ->  PRIMARY KEY OPENPAREN ident_list . CLOSEPAREN   (rule 37)
+
+    CLOSEPAREN	shift, and go to state 279
+
+
+
+state 270
+
+    foreign_key  ->  FOREIGN KEY OPENPAREN ident_list . CLOSEPAREN REFERENCES IDENTIFIER foreign_rules   (rule 40)
+
+    CLOSEPAREN	shift, and go to state 280
+
+
+
+state 271
+
+    attribute_expression  ->  attribute_expression . PLUS attribute_expression   (rule 101)
+    attribute_expression  ->  attribute_expression . MINUS attribute_expression   (rule 102)
+    attribute_expression  ->  attribute_expression . SLASH attribute_expression   (rule 103)
+    attribute_expression  ->  attribute_expression . STAR attribute_expression   (rule 104)
+    attributeorder_exp  ->  ASCENDING attribute_expression .   (rule 143)
+
+    PLUS	shift, and go to state 102
+    MINUS	shift, and go to state 103
+    STAR	shift, and go to state 104
+    SLASH	shift, and go to state 105
+
+    $default	reduce using rule 143 (attributeorder_exp)
+
+
+
+state 272
+
+    attribute_expression  ->  attribute_expression . PLUS attribute_expression   (rule 101)
+    attribute_expression  ->  attribute_expression . MINUS attribute_expression   (rule 102)
+    attribute_expression  ->  attribute_expression . SLASH attribute_expression   (rule 103)
+    attribute_expression  ->  attribute_expression . STAR attribute_expression   (rule 104)
+    attributeorder_exp  ->  DESCENDING attribute_expression .   (rule 144)
+
+    PLUS	shift, and go to state 102
+    MINUS	shift, and go to state 103
+    STAR	shift, and go to state 104
+    SLASH	shift, and go to state 105
+
+    $default	reduce using rule 144 (attributeorder_exp)
+
+
+
+state 273
+
+    attributeorder_list  ->  attributeorder_exp COMMA . attributeorder_list   (rule 141)
+
+    IDENTIFIER	shift, and go to state 37
+    STRING	shift, and go to state 38
+    STRING1	shift, and go to state 39
+    NUMBER	shift, and go to state 40
+    FUNCTION	shift, and go to state 41
+    FLOATVAL	shift, and go to state 42
+    MONEYVAL	shift, and go to state 43
+    DATEVAL	shift, and go to state 44
+    TNULL	shift, and go to state 45
+    DATE	shift, and go to state 46
+    OPENPAREN	shift, and go to state 52
+    ASCENDING	shift, and go to state 255
+    DESCENDING	shift, and go to state 256
+    ROWNUM	shift, and go to state 53
+    PLUS	shift, and go to state 54
+    MINUS	shift, and go to state 55
+
+    insert_value	go to state 57
+    attribute_expression	go to state 257
+    procedure	go to state 64
+    attribute	go to state 65
+    attributeorder_list	go to state 281
+    attributeorder_exp	go to state 259
+
+
+
+state 274
+
+    attributeexp_list  ->  attribute_expression COMMA . attributeexp_list   (rule 146)
+
+    IDENTIFIER	shift, and go to state 37
+    STRING	shift, and go to state 38
+    STRING1	shift, and go to state 39
+    NUMBER	shift, and go to state 40
+    FUNCTION	shift, and go to state 41
+    FLOATVAL	shift, and go to state 42
+    MONEYVAL	shift, and go to state 43
+    DATEVAL	shift, and go to state 44
+    TNULL	shift, and go to state 45
+    DATE	shift, and go to state 46
+    OPENPAREN	shift, and go to state 52
+    ROWNUM	shift, and go to state 53
+    PLUS	shift, and go to state 54
+    MINUS	shift, and go to state 55
+
+    insert_value	go to state 57
+    attribute_expression	go to state 260
+    procedure	go to state 64
+    attribute	go to state 65
+    attributeexp_list	go to state 282
+
+
+
+state 275
+
+    condition  ->  attribute_expression IN OPENPAREN insert_values CLOSEPAREN .   (rule 134)
+
+    $default	reduce using rule 134 (condition)
+
+
+
+state 276
+
+    condition  ->  attribute_expression IN OPENPAREN select_statement CLOSEPAREN .   (rule 137)
+
+    $default	reduce using rule 137 (condition)
+
+
+
+state 277
+
+    attribute_expression  ->  attribute_expression . PLUS attribute_expression   (rule 101)
+    attribute_expression  ->  attribute_expression . MINUS attribute_expression   (rule 102)
+    attribute_expression  ->  attribute_expression . SLASH attribute_expression   (rule 103)
+    attribute_expression  ->  attribute_expression . STAR attribute_expression   (rule 104)
+    condition  ->  attribute_expression BETWEEN attribute_expression AND attribute_expression .   (rule 135)
+
+    PLUS	shift, and go to state 102
+    MINUS	shift, and go to state 103
+    STAR	shift, and go to state 104
+    SLASH	shift, and go to state 105
+
+    $default	reduce using rule 135 (condition)
+
+
+
+state 278
+
+    with_grant  ->  WITH GRANT OPTION .   (rule 166)
+
+    $default	reduce using rule 166 (with_grant)
+
+
+
+state 279
+
+    primary_clause  ->  PRIMARY KEY OPENPAREN ident_list CLOSEPAREN .   (rule 37)
+
+    $default	reduce using rule 37 (primary_clause)
+
+
+
+state 280
+
+    foreign_key  ->  FOREIGN KEY OPENPAREN ident_list CLOSEPAREN . REFERENCES IDENTIFIER foreign_rules   (rule 40)
+
+    REFERENCES	shift, and go to state 283
+
+
+
+state 281
+
+    attributeorder_list  ->  attributeorder_exp COMMA attributeorder_list .   (rule 141)
+
+    $default	reduce using rule 141 (attributeorder_list)
+
+
+
+state 282
+
+    attributeexp_list  ->  attribute_expression COMMA attributeexp_list .   (rule 146)
+
+    $default	reduce using rule 146 (attributeexp_list)
+
+
+
+state 283
+
+    foreign_key  ->  FOREIGN KEY OPENPAREN ident_list CLOSEPAREN REFERENCES . IDENTIFIER foreign_rules   (rule 40)
+
+    IDENTIFIER	shift, and go to state 284
+
+
+
+state 284
+
+    foreign_key  ->  FOREIGN KEY OPENPAREN ident_list CLOSEPAREN REFERENCES IDENTIFIER . foreign_rules   (rule 40)
+
+    ON  	shift, and go to state 285
+
+    $default	reduce using rule 41 (foreign_rules)
+
+    foreign_rules	go to state 286
+
+
+
+state 285
+
+    foreign_rules  ->  ON . DELETE delete_rule   (rule 42)
+
+    DELETE	shift, and go to state 287
+
+
+
+state 286
+
+    foreign_key  ->  FOREIGN KEY OPENPAREN ident_list CLOSEPAREN REFERENCES IDENTIFIER foreign_rules .   (rule 40)
+
+    $default	reduce using rule 40 (foreign_key)
+
+
+
+state 287
+
+    foreign_rules  ->  ON DELETE . delete_rule   (rule 42)
+
+    SET 	shift, and go to state 288
+    CASCADE	shift, and go to state 289
+    RESTRICT	shift, and go to state 290
+
+    delete_rule	go to state 291
+
+
+
+state 288
+
+    delete_rule  ->  SET . TNULL   (rule 45)
+
+    TNULL	shift, and go to state 292
+
+
+
+state 289
+
+    delete_rule  ->  CASCADE .   (rule 44)
+
+    $default	reduce using rule 44 (delete_rule)
+
+
+
+state 290
+
+    delete_rule  ->  RESTRICT .   (rule 43)
+
+    $default	reduce using rule 43 (delete_rule)
+
+
+
+state 291
+
+    foreign_rules  ->  ON DELETE delete_rule .   (rule 42)
+
+    $default	reduce using rule 42 (foreign_rules)
+
+
+
+state 292
+
+    delete_rule  ->  SET TNULL .   (rule 45)
+
+    $default	reduce using rule 45 (delete_rule)
+
+
+
+state 293
+
+    $   	go to state 294
+
+
+
+state 294
+
+    $   	go to state 295
+
+
+
+state 295
+
+    $default	accept

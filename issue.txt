@@ -1,0 +1,7 @@
+Welcome to MBDMS release 1.0
+
+The information you see now, comes from the file 'issue.txt' in the MDBMS
+directory. Here you can put any information you like. For example, a list
+of databases available, and a list of users available.
+
+Press \h for help.
